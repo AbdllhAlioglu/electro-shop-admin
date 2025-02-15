@@ -1,5 +1,12 @@
-"use client";
 import React from "react";
+
+// Stok durumuna göre class belirleme fonksiyonunu component dışına çıkaralım
+const getStockStatusClass = (stock) => {
+  if (stock > 50) return "bg-green-100 text-green-800";
+  if (stock > 20) return "bg-yellow-100 text-yellow-800";
+  if (stock > 0) return "bg-red-100 text-red-800";
+  return "bg-red-500 text-white";
+};
 
 export default function ProductTable({ products, categories }) {
   return (
@@ -22,7 +29,7 @@ export default function ProductTable({ products, categories }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {products.map((product) => (
+          {products?.map((product) => (
             <tr
               key={product.id}
               className="hover:bg-gray-50 transition-colors duration-200"
@@ -31,29 +38,21 @@ export default function ProductTable({ products, categories }) {
                 {product.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                {product.price} TL
+                {product.price} ₺
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm">
                 <span
-                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    product.stock > 50
-                      ? "bg-green-100 text-green-800"
-                      : product.stock > 20
-                      ? "bg-yellow-100 text-yellow-800"
-                      : product.stock > 0
-                      ? "bg-red-100 text-red-800"
-                      : "bg-red-500 text-white"
-                  }`}
+                  className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStockStatusClass(
+                    product.stock
+                  )}`}
                 >
                   {product.stock}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                {
-                  categories.find(
-                    (category) => category.id === product.category_id
-                  )?.name
-                }
+                {categories?.find(
+                  (category) => category.id === product.category_id
+                )?.name || "-"}
               </td>
             </tr>
           ))}
