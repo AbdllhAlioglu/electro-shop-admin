@@ -32,13 +32,6 @@ export default function Navigation() {
         </li>
         <li>
           <div className="flex items-center gap-2">
-            <Image
-              src={logo}
-              alt="Profile"
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-full"
-            />
             <Link
               href="/profile"
               className="hover:text-primary-300 transition-colors"
