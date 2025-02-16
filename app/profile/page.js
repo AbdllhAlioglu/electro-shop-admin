@@ -18,7 +18,7 @@ export default function ProfilePage() {
               <FiUser className="w-8 h-8 text-gray-500" />
             </div>
             <div>
-              <h2 className="text-xl font-semibold">Abdullah Alioğlu</h2>
+              <h2 className="text-xl font-semibold">Maliki Alioğlu</h2>
               <p className="text-gray-600">Admin</p>
             </div>
           </div>
