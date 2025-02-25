@@ -36,15 +36,38 @@ const THEMES = [
   },
 ];
 
+const FONT_SIZES = [
+  {
+    id: "normal",
+    name: "Normal",
+    scale: "1",
+    description: "Varsayılan yazı boyutu",
+  },
+  {
+    id: "large",
+    name: "Büyük",
+    scale: "1.1",
+    description: "Daha büyük yazı boyutu",
+  },
+  {
+    id: "larger",
+    name: "Çok Büyük",
+    scale: "1.2",
+    description: "En büyük yazı boyutu",
+  },
+];
+
 export default function SettingsPage() {
   const queryClient = useQueryClient();
   const [selectedCurrency, setSelectedCurrency] = useState("TRY");
   const [selectedTheme, setSelectedTheme] = useState("light");
+  const [selectedFontSize, setSelectedFontSize] = useState("normal");
 
   // Sayfa yüklendiğinde localStorage'dan değerleri al
   useEffect(() => {
     const savedCurrency = localStorage.getItem("selectedCurrency");
     const savedTheme = localStorage.getItem("selectedTheme");
+    const savedFontSize = localStorage.getItem("selectedFontSize");
 
     if (savedCurrency) {
       setSelectedCurrency(savedCurrency);
@@ -55,6 +78,14 @@ export default function SettingsPage() {
       setSelectedTheme(savedTheme);
       document.documentElement.setAttribute("data-theme", savedTheme);
       queryClient.setQueryData(["settings", "theme"], savedTheme);
+    }
+
+    if (savedFontSize) {
+      setSelectedFontSize(savedFontSize);
+      document.documentElement.style.fontSize = `${
+        FONT_SIZES.find((f) => f.id === savedFontSize)?.scale
+      }rem`;
+      queryClient.setQueryData(["settings", "fontSize"], savedFontSize);
     }
   }, [queryClient]);
 
@@ -84,6 +115,22 @@ export default function SettingsPage() {
     } catch (error) {
       toast.error("Tema güncellenirken bir hata oluştu!");
       console.error("Tema güncellenirken hata:", error);
+    }
+  };
+
+  const handleFontSizeChange = (fontSizeId) => {
+    try {
+      setSelectedFontSize(fontSizeId);
+      // localStorage'a kaydet
+      localStorage.setItem("selectedFontSize", fontSizeId);
+      // Global state ve DOM'u güncelle
+      queryClient.setQueryData(["settings", "fontSize"], fontSizeId);
+      const fontSize = FONT_SIZES.find((f) => f.id === fontSizeId)?.scale;
+      document.documentElement.style.fontSize = `${fontSize}rem`;
+      toast.success("Yazı boyutu başarıyla güncellendi!");
+    } catch (error) {
+      toast.error("Yazı boyutu güncellenirken bir hata oluştu!");
+      console.error("Yazı boyutu güncellenirken hata:", error);
     }
   };
 
@@ -181,6 +228,37 @@ export default function SettingsPage() {
         <div className="mt-6">
           <p className="text-sm text-gray-500">
             * Seçilen tema tüm uygulamanın görünümünü değiştirecektir.
+          </p>
+        </div>
+      </div>
+
+      {/* Yazı Boyutu Ayarları */}
+      <div className="theme-card rounded-lg shadow-md p-6 max-w-2xl">
+        <h2 className="text-xl font-semibold mb-4">Yazı Boyutu Ayarları</h2>
+        <div className="grid grid-cols-3 gap-4">
+          {FONT_SIZES.map((fontSize) => (
+            <button
+              key={fontSize.id}
+              onClick={() => handleFontSizeChange(fontSize.id)}
+              className={`p-4 rounded-lg border-2 transition-all ${
+                selectedFontSize === fontSize.id
+                  ? "border-blue-500 bg-blue-50"
+                  : "border-gray-200 hover:border-blue-300"
+              }`}
+            >
+              <div className="flex flex-col gap-2">
+                <p className="font-medium">{fontSize.name}</p>
+                <p className="text-sm text-gray-500">{fontSize.description}</p>
+                <div className="mt-2">
+                  <span style={{ fontSize: `${fontSize.scale}rem` }}>Aa</span>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+        <div className="mt-6">
+          <p className="text-sm text-gray-500">
+            * Seçilen yazı boyutu tüm uygulamadaki metinleri etkileyecektir.
           </p>
         </div>
       </div>
