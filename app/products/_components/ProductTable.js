@@ -1,6 +1,8 @@
 "use client";
 import ProductTableHeader from "./ProductTableHeader";
 import ProductTableBody from "./ProductTableBody";
+import { useQuery } from "@tanstack/react-query";
+import { getExchangeRates } from "@/services/currencyService";
 
 export default function ProductTable({
   products,
@@ -9,6 +11,12 @@ export default function ProductTable({
   onEdit,
   onDelete,
 }) {
+  const { data: exchangeRates } = useQuery({
+    queryKey: ["exchangeRates"],
+    queryFn: () => getExchangeRates(),
+    staleTime: 1000 * 60 * 60, // 1 saat
+  });
+
   return (
     <div className="overflow-x-auto rounded-lg shadow-sm">
       <table className="min-w-full bg-white">
@@ -19,6 +27,7 @@ export default function ProductTable({
           brands={brands}
           onEdit={onEdit}
           onDelete={onDelete}
+          exchangeRates={exchangeRates}
         />
       </table>
     </div>

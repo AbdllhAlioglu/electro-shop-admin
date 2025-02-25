@@ -5,8 +5,9 @@ import IconButton from "@/app/ui/IconButton";
 import { deleteProduct } from "@/services/apiProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditProductForm from "./EditProductForm";
+import { convertPrice, formatPrice } from "@/services/currencyService";
 
 export default function ProductTableRow({
   product,
@@ -14,9 +15,28 @@ export default function ProductTableRow({
   brands,
   onEdit,
   onDelete,
+  exchangeRates,
 }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const queryClient = useQueryClient();
+  const [currentCurrency, setCurrentCurrency] = useState("TRY");
+
+  useEffect(() => {
+    // localStorage'dan para birimini al
+    const savedCurrency = localStorage.getItem("selectedCurrency");
+    if (savedCurrency) {
+      setCurrentCurrency(savedCurrency);
+      queryClient.setQueryData(["settings", "currency"], savedCurrency);
+    }
+  }, [queryClient]);
+
+  // React Query'den para birimi değişikliklerini dinle
+  useEffect(() => {
+    const currency = queryClient.getQueryData(["settings", "currency"]);
+    if (currency) {
+      setCurrentCurrency(currency);
+    }
+  }, [queryClient]);
 
   const handleDelete = () => {
     toast((t) => (
@@ -54,6 +74,13 @@ export default function ProductTableRow({
     ));
   };
 
+  const displayPrice = exchangeRates
+    ? formatPrice(
+        convertPrice(product.price, "TRY", currentCurrency, exchangeRates),
+        currentCurrency
+      )
+    : `${product.price} ₺`;
+
   return (
     <>
       <tr className="hover:bg-gray-50 transition-colors duration-200">
@@ -61,7 +88,7 @@ export default function ProductTableRow({
           {product.name}
         </td>
         <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-          {product.price} <span className="font-bold">₺</span>
+          {displayPrice}
         </td>
         <td className="px-4 py-2 whitespace-nowrap text-sm">
           <StockStatus stock={product.stock} />

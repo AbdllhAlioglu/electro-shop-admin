@@ -7,6 +7,7 @@ export default function ProductTableBody({
   brands,
   onEdit,
   onDelete,
+  exchangeRates,
 }) {
   return (
     <tbody className="divide-y divide-gray-200">
@@ -21,6 +22,7 @@ export default function ProductTableBody({
             brands={brands}
             onEdit={onEdit}
             onDelete={onDelete}
+            exchangeRates={exchangeRates}
           />
         ))
       )}
