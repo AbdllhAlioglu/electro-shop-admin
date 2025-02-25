@@ -16,7 +16,6 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      // features'ı JSON formatına çevir
       const formattedData = {
         ...data,
         features: JSON.stringify(
@@ -40,10 +39,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 bg-primary-900 p-6 rounded-lg border border-primary-700"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <label className="block text-sm font-medium text-primary-200 mb-1">
           Ürün Adı

@@ -5,6 +5,8 @@ import IconButton from "@/app/ui/IconButton";
 import { deleteProduct } from "@/services/apiProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import EditProductForm from "./EditProductForm";
 
 export default function ProductTableRow({
   product,
@@ -13,6 +15,7 @@ export default function ProductTableRow({
   onEdit,
   onDelete,
 }) {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const queryClient = useQueryClient();
 
   const handleDelete = () => {
@@ -52,41 +55,57 @@ export default function ProductTableRow({
   };
 
   return (
-    <tr className="hover:bg-gray-50 transition-colors duration-200">
-      <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
-        {product.name}
-      </td>
-      <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-        {product.price} <span className="font-bold">₺</span>
-      </td>
-      <td className="px-4 py-2 whitespace-nowrap text-sm">
-        <StockStatus stock={product.stock} />
-      </td>
-      <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-        {categories?.find((category) => category.id === product.category_id)
-          ?.name || "-"}
-      </td>
-      <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-        {brands?.find((brand) => brand.id === product.brand_id)?.name || "-"}
-      </td>
-      <td className="px-4 py-2 whitespace-nowrap text-sm">
-        <div className="flex gap-2">
-          <IconButton
-            icon={FiEdit2}
-            variant="primary"
-            onClick={() => onEdit(product)}
-            className="!p-1 !bg-slate-500"
-            title="Düzenle"
-          />
-          <IconButton
-            icon={FiTrash2}
-            variant="danger"
-            onClick={handleDelete}
-            className="!p-1"
-            title="Sil"
-          />
+    <>
+      <tr className="hover:bg-gray-50 transition-colors duration-200">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
+          {product.name}
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+          {product.price} <span className="font-bold">₺</span>
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap text-sm">
+          <StockStatus stock={product.stock} />
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+          {categories?.find((category) => category.id === product.category_id)
+            ?.name || "-"}
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+          {brands?.find((brand) => brand.id === product.brand_id)?.name || "-"}
+        </td>
+        <td className="px-4 py-2 whitespace-nowrap text-sm">
+          <div className="flex gap-2">
+            <IconButton
+              icon={FiEdit2}
+              variant="primary"
+              onClick={() => setIsEditModalOpen(true)}
+              className="!p-1 !bg-slate-500"
+              title="Düzenle"
+            />
+            <IconButton
+              icon={FiTrash2}
+              variant="danger"
+              onClick={handleDelete}
+              className="!p-1"
+              title="Sil"
+            />
+          </div>
+        </td>
+      </tr>
+
+      {isEditModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+            <h2 className="text-xl font-semibold mb-4">Ürün Düzenle</h2>
+            <EditProductForm
+              product={product}
+              categories={categories}
+              brands={brands}
+              onClose={() => setIsEditModalOpen(false)}
+            />
+          </div>
         </div>
-      </td>
-    </tr>
+      )}
+    </>
   );
 }

@@ -9,10 +9,11 @@ import FilterBar from "./_components/FilterBar";
 import { FiPlus } from "react-icons/fi";
 import IconButton from "@/app/ui/IconButton";
 import AddProductForm from "./_components/AddProductForm";
+import ProductModal from "./_components/ProductModal";
 
 export default function Page() {
   const [products, setProducts] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const {
     data: productsData,
@@ -101,25 +102,28 @@ export default function Page() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Ürünler</h1>
         <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          onClick={() => setIsAddModalOpen(true)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 
+            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          {showAddForm ? "İptal" : "Yeni Ürün Ekle"}
+          Yeni Ürün Ekle
         </button>
       </div>
 
-      {showAddForm && (
-        <div className="mb-6">
-          <AddProductForm
-            categories={categories}
-            brands={brands}
-            onProductAdded={() => {
-              setShowAddForm(false);
-              queryClient.invalidateQueries(["products"]);
-            }}
-          />
-        </div>
-      )}
+      <ProductModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        title="Yeni Ürün Ekle"
+      >
+        <AddProductForm
+          onProductAdded={() => {
+            setIsAddModalOpen(false);
+            queryClient.invalidateQueries(["products"]);
+          }}
+          categories={categories}
+          brands={brands}
+        />
+      </ProductModal>
 
       <FilterBar
         searchTerm={searchTerm}

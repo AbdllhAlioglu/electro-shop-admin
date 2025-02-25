@@ -32,3 +32,18 @@ export async function addProduct(productData) {
 
   return data[0];
 }
+
+export async function updateProduct(id, updatedData) {
+  const { data, error } = await supabase
+    .from("products")
+    .update(updatedData)
+    .eq("id", id)
+    .select();
+
+  if (error) {
+    console.error("Error updating product:", error);
+    throw error;
+  }
+
+  return data[0];
+}
