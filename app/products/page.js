@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getProducts } from "@/services/apiProducts";
 import { useQuery } from "@tanstack/react-query";
 import ProductTable from "./_components/ProductTable";
@@ -10,8 +10,10 @@ import { FiPlus } from "react-icons/fi";
 import IconButton from "@/app/ui/IconButton";
 
 export default function Page() {
+  const [products, setProducts] = useState([]);
+
   const {
-    data: products,
+    data: productsData,
     isLoading,
     error,
   } = useQuery({
@@ -36,9 +38,9 @@ export default function Page() {
 
   // Filtreleme ve sıralama fonksiyonu
   const getFilteredAndSortedProducts = () => {
-    if (!products) return [];
+    if (!productsData) return [];
 
-    let filtered = [...products];
+    let filtered = [...productsData];
 
     // Arama filtresi
     if (searchTerm) {
@@ -75,10 +77,20 @@ export default function Page() {
     return filtered;
   };
 
+  useEffect(() => {
+    if (productsData) {
+      setProducts(productsData);
+    }
+  }, [productsData]);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   const filteredProducts = getFilteredAndSortedProducts();
+
+  const handleDelete = (deletedProduct) => {
+    setProducts(products.filter((product) => product.id !== deletedProduct.id));
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -112,9 +124,7 @@ export default function Page() {
         onEdit={(product) => {
           /* Düzenleme modalını aç */
         }}
-        onDelete={(product) => {
-          /* Silme işlemini başlat */
-        }}
+        onDelete={handleDelete}
       />
     </div>
   );

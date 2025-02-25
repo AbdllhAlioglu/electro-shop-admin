@@ -3,6 +3,7 @@ import "../app/_styles/globals.css";
 import Header from "./_components/Header";
 import LeftMenu from "./_components/LeftMenu";
 import Providers from "./providers";
+import { Toaster } from "react-hot-toast";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -36,6 +37,23 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </Providers>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: "#333",
+              color: "#fff",
+            },
+            success: {
+              duration: 3000,
+              theme: {
+                primary: "green",
+                secondary: "black",
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );

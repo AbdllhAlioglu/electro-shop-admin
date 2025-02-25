@@ -1,6 +1,10 @@
+"use client";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import StockStatus from "./StockStatus";
 import IconButton from "@/app/ui/IconButton";
+import { deleteProduct } from "@/services/apiProducts";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 export default function ProductTableRow({
   product,
@@ -9,13 +13,51 @@ export default function ProductTableRow({
   onEdit,
   onDelete,
 }) {
+  const queryClient = useQueryClient();
+
+  const handleDelete = () => {
+    toast((t) => (
+      <div className="flex flex-col gap-4">
+        <p>
+          &quot;{product.name}&quot; ürününü silmek istediğinizden emin misiniz?
+        </p>
+        <div className="flex justify-end gap-2">
+          <button
+            className="px-3 py-1 bg-gray-200 text-gray-800 rounded-md"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            İptal
+          </button>
+          <button
+            className="px-3 py-1 bg-red-500 text-white rounded-md"
+            onClick={async () => {
+              toast.dismiss(t.id);
+              try {
+                await deleteProduct(product.id);
+                queryClient.invalidateQueries({ queryKey: ["products"] });
+                onDelete(product);
+                toast.success("Ürün başarıyla silindi");
+              } catch (error) {
+                toast.error(
+                  "Ürün silinirken bir hata oluştu: " + error.message
+                );
+              }
+            }}
+          >
+            Sil
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <tr className="hover:bg-gray-50 transition-colors duration-200">
       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
         {product.name}
       </td>
       <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
-        {product.price} ₺
+        {product.price} <span className="font-bold">₺</span>
       </td>
       <td className="px-4 py-2 whitespace-nowrap text-sm">
         <StockStatus stock={product.stock} />
@@ -39,7 +81,7 @@ export default function ProductTableRow({
           <IconButton
             icon={FiTrash2}
             variant="danger"
-            onClick={() => onDelete(product)}
+            onClick={handleDelete}
             className="!p-1"
             title="Sil"
           />
