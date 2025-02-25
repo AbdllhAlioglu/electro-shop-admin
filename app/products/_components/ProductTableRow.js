@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 import EditProductForm from "./EditProductForm";
 import { convertPrice, formatPrice } from "@/services/currencyService";
+import { createNotification } from "@/services/apiNotifications";
 
 export default function ProductTableRow({
   product,
@@ -38,7 +39,7 @@ export default function ProductTableRow({
     }
   }, [queryClient]);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     toast((t) => (
       <div className="flex flex-col gap-4">
         <p>
@@ -57,6 +58,15 @@ export default function ProductTableRow({
               toast.dismiss(t.id);
               try {
                 await deleteProduct(product.id);
+
+                // Bildirim oluştur
+                await createNotification({
+                  action_type: "delete",
+                  entity_type: "product",
+                  entity_id: product.id,
+                  description: `"${product.name}" ürünü silindi`,
+                });
+
                 queryClient.invalidateQueries({ queryKey: ["products"] });
                 onDelete(product);
                 toast.success("Ürün başarıyla silindi");

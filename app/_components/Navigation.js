@@ -11,7 +11,7 @@ export default function Navigation() {
             href="/notifications"
             className="hover:text-primary-300 transition-colors"
           >
-            Bildirimler (3)
+            Bildirimler (0)
           </Link>
         </li>
         <li>

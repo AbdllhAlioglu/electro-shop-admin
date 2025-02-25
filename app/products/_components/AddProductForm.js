@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { addProduct } from "@/services/apiProducts";
 import toast from "react-hot-toast";
+import { createNotification } from "@/services/apiNotifications";
 
 export default function AddProductForm({ onProductAdded, categories, brands }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,16 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
         power: parseInt(data.power),
       };
 
-      await addProduct(formattedData);
+      const newProduct = await addProduct(formattedData);
+
+      // Bildirim oluştur
+      await createNotification({
+        action_type: "create",
+        entity_type: "product",
+        entity_id: newProduct[0].id,
+        description: `"${data.name}" ürünü eklendi`,
+      });
+
       toast.success("Ürün başarıyla eklendi!");
       reset();
       if (onProductAdded) onProductAdded();

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { updateProduct } from "@/services/apiProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { createNotification } from "@/services/apiNotifications";
 
 export default function EditProductForm({
   product,
@@ -24,6 +25,15 @@ export default function EditProductForm({
     e.preventDefault();
     try {
       await updateProduct(product.id, formData);
+
+      // Bildirim oluştur
+      await createNotification({
+        action_type: "update",
+        entity_type: "product",
+        entity_id: product.id,
+        description: `"${formData.name}" ürünü güncellendi`,
+      });
+
       queryClient.invalidateQueries({ queryKey: ["products"] });
       toast.success("Ürün başarıyla güncellendi");
       onClose();
