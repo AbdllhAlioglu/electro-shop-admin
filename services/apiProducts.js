@@ -18,3 +18,17 @@ export async function deleteProduct(id) {
     throw new Error(error.message);
   }
 }
+
+export async function addProduct(productData) {
+  const { data, error } = await supabase
+    .from("products")
+    .insert([productData])
+    .select();
+
+  if (error) {
+    console.error("Error adding product:", error);
+    throw error;
+  }
+
+  return data[0];
+}

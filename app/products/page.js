@@ -1,16 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { getProducts } from "@/services/apiProducts";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import ProductTable from "./_components/ProductTable";
 import { getCategories } from "@/services/apiCategories";
 import { getBrands } from "@/services/apiBrands";
 import FilterBar from "./_components/FilterBar";
 import { FiPlus } from "react-icons/fi";
 import IconButton from "@/app/ui/IconButton";
+import AddProductForm from "./_components/AddProductForm";
 
 export default function Page() {
   const [products, setProducts] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false);
 
   const {
     data: productsData,
@@ -35,6 +37,8 @@ export default function Page() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const queryClient = useQueryClient();
 
   // Filtreleme ve sıralama fonksiyonu
   const getFilteredAndSortedProducts = () => {
@@ -96,16 +100,26 @@ export default function Page() {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Ürünler</h1>
-        <IconButton
-          icon={FiPlus}
-          variant="primary"
-          onClick={() => {
-            /* Ürün ekleme modalını aç */
-          }}
+        <button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
         >
-          Yeni Ürün
-        </IconButton>
+          {showAddForm ? "İptal" : "Yeni Ürün Ekle"}
+        </button>
       </div>
+
+      {showAddForm && (
+        <div className="mb-6">
+          <AddProductForm
+            categories={categories}
+            brands={brands}
+            onProductAdded={() => {
+              setShowAddForm(false);
+              queryClient.invalidateQueries(["products"]);
+            }}
+          />
+        </div>
+      )}
 
       <FilterBar
         searchTerm={searchTerm}
