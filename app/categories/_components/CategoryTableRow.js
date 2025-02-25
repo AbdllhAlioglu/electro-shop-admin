@@ -1,7 +1,10 @@
 "use client";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import IconButton from "@/app/ui/IconButton";
-import { deleteCategory } from "@/services/apiCategories";
+import {
+  deleteCategory,
+  checkCategoryHasProducts,
+} from "@/services/apiCategories";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -19,46 +22,63 @@ export default function CategoryTableRow({
   const queryClient = useQueryClient();
 
   const handleDelete = async () => {
-    toast((t) => (
-      <div className="flex flex-col gap-4">
-        <p>
-          &quot;{category.name}&quot; kategorisini silmek istediğinizden emin
-          misiniz?
-        </p>
-        <div className="flex justify-end gap-2">
-          <button
-            className="px-3 py-1 bg-gray-200 text-gray-800 rounded-md"
-            onClick={() => toast.dismiss(t.id)}
-          >
-            İptal
-          </button>
-          <button
-            className="px-3 py-1 bg-red-500 text-white rounded-md"
-            onClick={async () => {
-              toast.dismiss(t.id);
-              try {
-                await deleteCategory(category.id);
-                await createNotification({
-                  action_type: "delete",
-                  entity_type: "category",
-                  entity_id: category.id,
-                  description: `"${category.name}" kategorisi silindi`,
-                });
-                queryClient.invalidateQueries({ queryKey: ["categories"] });
-                onDelete(category);
-                toast.success("Kategori başarıyla silindi");
-              } catch (error) {
-                toast.error(
-                  "Kategori silinirken bir hata oluştu: " + error.message
-                );
-              }
-            }}
-          >
-            Sil
-          </button>
+    try {
+      // Önce kategoriye bağlı ürün var mı kontrol et
+      const hasProducts = await checkCategoryHasProducts(category.id);
+
+      if (hasProducts) {
+        toast.error(
+          "Bu kategori ürünler tarafından kullanılıyor. Önce bağlı ürünleri başka kategorilere taşıyın veya silin."
+        );
+        return;
+      }
+
+      // Eğer ürün yoksa silme onayı iste
+      toast((t) => (
+        <div className="flex flex-col gap-4">
+          <p>
+            &quot;{category.name}&quot; kategorisini silmek istediğinizden emin
+            misiniz?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              className="px-3 py-1 bg-gray-200 text-gray-800 rounded-md"
+              onClick={() => toast.dismiss(t.id)}
+            >
+              İptal
+            </button>
+            <button
+              className="px-3 py-1 bg-red-500 text-white rounded-md"
+              onClick={async () => {
+                toast.dismiss(t.id);
+                try {
+                  await deleteCategory(category.id);
+                  await createNotification({
+                    action_type: "delete",
+                    entity_type: "category",
+                    entity_id: category.id,
+                    description: `"${category.name}" kategorisi silindi`,
+                  });
+                  queryClient.invalidateQueries({ queryKey: ["categories"] });
+                  onDelete(category);
+                  toast.success("Kategori başarıyla silindi");
+                } catch (error) {
+                  toast.error(
+                    "Kategori silinirken bir hata oluştu: " + error.message
+                  );
+                }
+              }}
+            >
+              Sil
+            </button>
+          </div>
         </div>
-      </div>
-    ));
+      ));
+    } catch (error) {
+      toast.error(
+        "Kategori kontrol edilirken bir hata oluştu: " + error.message
+      );
+    }
   };
 
   return (

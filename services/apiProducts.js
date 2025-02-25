@@ -20,17 +20,26 @@ export async function deleteProduct(id) {
 }
 
 export async function addProduct(productData) {
-  const { data, error } = await supabase
-    .from("products")
-    .insert([productData])
-    .select();
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .insert([productData])
+      .select();
 
-  if (error) {
-    console.error("Error adding product:", error);
+    if (error) {
+      console.error("Supabase error:", error);
+      throw new Error(error.message);
+    }
+
+    if (!data || data.length === 0) {
+      throw new Error("Ürün eklendi fakat veri dönmedi");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Add product error:", error);
     throw error;
   }
-
-  return data[0];
 }
 
 export async function updateProduct(id, updatedData) {

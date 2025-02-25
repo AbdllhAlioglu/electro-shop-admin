@@ -97,6 +97,11 @@ export default function Page() {
     setProducts(products.filter((product) => product.id !== deletedProduct.id));
   };
 
+  const handleProductAdded = async () => {
+    // Sadece bir kez query invalidate edilmeli
+    await queryClient.invalidateQueries({ queryKey: ["products"] });
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
@@ -116,10 +121,7 @@ export default function Page() {
         title="Yeni Ürün Ekle"
       >
         <AddProductForm
-          onProductAdded={() => {
-            setIsAddModalOpen(false);
-            queryClient.invalidateQueries(["products"]);
-          }}
+          onProductAdded={handleProductAdded}
           categories={categories}
           brands={brands}
         />

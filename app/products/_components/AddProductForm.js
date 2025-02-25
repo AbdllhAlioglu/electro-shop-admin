@@ -23,13 +23,19 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
           data.features.split("\n").filter((feature) => feature.trim() !== "")
         ),
         category_id: parseInt(data.category_id),
+        brand_id: parseInt(data.brand_id),
         stock: parseInt(data.stock),
         power: parseInt(data.power),
+        price: parseFloat(data.price),
       };
 
       const newProduct = await addProduct(formattedData);
 
-      // Bildirim oluştur
+      if (!newProduct || !newProduct[0]) {
+        throw new Error("Ürün eklenemedi");
+      }
+
+      // Önce bildirimi oluştur
       await createNotification({
         action_type: "create",
         entity_type: "product",
@@ -37,12 +43,21 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
         description: `"${data.name}" ürünü eklendi`,
       });
 
+      // Başarı mesajını göster
       toast.success("Ürün başarıyla eklendi!");
+
+      // Formu resetle
       reset();
-      if (onProductAdded) onProductAdded();
+
+      // En son callback'i çağır ve component'in yeniden render olmasını sağla
+      if (onProductAdded) {
+        await onProductAdded();
+      }
     } catch (error) {
-      console.error("Ürün eklenirken hata oluştu:", error);
-      toast.error("Ürün eklenirken bir hata oluştu!");
+      console.error("Ürün eklenirken hata detayı:", error);
+      toast.error(
+        `Ürün eklenirken bir hata oluştu: ${error.message || "Bilinmeyen hata"}`
+      );
     } finally {
       setIsLoading(false);
     }

@@ -50,3 +50,14 @@ export async function deleteCategory(id) {
     throw error;
   }
 }
+
+export async function checkCategoryHasProducts(categoryId) {
+  const { data, error } = await supabase
+    .from("products")
+    .select("id")
+    .eq("category_id", categoryId)
+    .limit(1);
+
+  if (error) throw new Error(error.message);
+  return data.length > 0;
+}
