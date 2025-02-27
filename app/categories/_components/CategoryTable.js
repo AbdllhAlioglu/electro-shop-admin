@@ -1,13 +1,13 @@
 import CategoryTableRow from "./CategoryTableRow";
 
-export default function CategoryTable({ categories, onEdit, onDelete }) {
-  // Find parent category name helper function
-  const getParentCategoryName = (parentId) => {
-    if (!parentId) return "-";
-    const parent = categories.find((cat) => cat.id === parentId);
-    return parent ? parent.name : "-";
-  };
+// Find parent category name helper function
+function getParentCategoryName(categories, parentId) {
+  if (!parentId) return "-";
+  const parent = categories.find((cat) => cat.id === parentId);
+  return parent ? parent.name : "-";
+}
 
+export default function CategoryTable({ categories }) {
   return (
     <div className="overflow-x-auto rounded-lg shadow-lg">
       <table className="min-w-full bg-white">
@@ -33,9 +33,7 @@ export default function CategoryTable({ categories, onEdit, onDelete }) {
               key={category.id}
               category={category}
               categories={categories}
-              parentName={getParentCategoryName(category.parent_id)}
-              onEdit={onEdit}
-              onDelete={onDelete}
+              parentName={getParentCategoryName(categories, category.parent_id)}
             />
           ))}
         </tbody>

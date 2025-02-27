@@ -1,7 +1,7 @@
-import React from "react";
+import DashboardCard from "@/app/_components/DashboardCard";
 import { getProducts } from "@/services/apiProducts";
 import { getCategories } from "@/services/apiCategories";
-import { FiPackage, FiGrid, FiAlertCircle, FiDollarSign } from "react-icons/fi";
+import { FiPackage, FiGrid, FiAlertCircle } from "react-icons/fi";
 
 export default async function Home() {
   const products = await getProducts();
@@ -19,57 +19,30 @@ export default async function Home() {
       <h1 className="text-2xl font-bold mb-6">Ana Sayfa</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-        {/* Toplam Ürünler */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Toplam Ürünler</p>
-              <p className="text-2xl font-bold mt-1">{totalProducts}</p>
-            </div>
-            <div className="bg-blue-50 p-3 rounded-full">
-              <FiPackage className="w-6 h-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
-
-        {/* Toplam Kategoriler */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Kategoriler</p>
-              <p className="text-2xl font-bold mt-1">{totalCategories}</p>
-            </div>
-            <div className="bg-purple-50 p-3 rounded-full">
-              <FiGrid className="w-6 h-6 text-purple-600" />
-            </div>
-          </div>
-        </div>
-
-        {/* Stokta Olmayan */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Stokta Olmayan</p>
-              <p className="text-2xl font-bold mt-1">{outOfStock}</p>
-            </div>
-            <div className="bg-red-50 p-3 rounded-full">
-              <FiAlertCircle className="w-6 h-6 text-red-600" />
-            </div>
-          </div>
-        </div>
-
-        {/* Düşük Stok */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Düşük Stok</p>
-              <p className="text-2xl font-bold mt-1">{lowStock}</p>
-            </div>
-            <div className="bg-yellow-50 p-3 rounded-full">
-              <FiAlertCircle className="w-6 h-6 text-yellow-600" />
-            </div>
-          </div>
-        </div>
+        <DashboardCard
+          title="Toplam Ürünler"
+          value={totalProducts}
+          icon={<FiPackage className="w-6 h-6 text-blue-600" />}
+          color="bg-blue-50"
+        />
+        <DashboardCard
+          title="Kategoriler"
+          value={totalCategories}
+          icon={<FiGrid className="w-6 h-6 text-purple-600" />}
+          color="bg-purple-50"
+        />
+        <DashboardCard
+          title="Stokta Olmayan"
+          value={outOfStock}
+          icon={<FiAlertCircle className="w-6 h-6 text-red-600" />}
+          color="bg-red-50"
+        />
+        <DashboardCard
+          title="Düşük Stok"
+          value={lowStock}
+          icon={<FiAlertCircle className="w-6 h-6 text-yellow-600" />}
+          color="bg-yellow-50"
+        />
       </div>
     </div>
   );

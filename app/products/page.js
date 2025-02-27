@@ -7,7 +7,7 @@ import { getCategories } from "@/services/apiCategories";
 import { getBrands } from "@/services/apiBrands";
 import FilterBar from "./_components/FilterBar";
 import { FiPlus } from "react-icons/fi";
-import IconButton from "@/app/ui/IconButton";
+import IconButton from "@/app/_components/IconButton";
 import AddProductForm from "./_components/AddProductForm";
 import ProductModal from "./_components/ProductModal";
 

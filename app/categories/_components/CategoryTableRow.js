@@ -1,25 +1,19 @@
 "use client";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
-import IconButton from "@/app/ui/IconButton";
+import IconButton from "@/app/_components/IconButton";
 import {
   deleteCategory,
   checkCategoryHasProducts,
 } from "@/services/apiCategories";
-import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import EditCategoryForm from "./EditCategoryForm";
 import { createNotification } from "@/services/apiNotifications";
 
-export default function CategoryTableRow({
-  category,
-  parentName,
-  categories,
-  onEdit,
-  onDelete,
-}) {
+export default function CategoryTableRow({ category, parentName, categories }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const handleDelete = async () => {
     try {
@@ -59,8 +53,7 @@ export default function CategoryTableRow({
                     entity_id: category.id,
                     description: `"${category.name}" kategorisi silindi`,
                   });
-                  queryClient.invalidateQueries({ queryKey: ["categories"] });
-                  onDelete(category);
+                  router.refresh();
                   toast.success("Kategori başarıyla silindi");
                 } catch (error) {
                   toast.error(
@@ -121,6 +114,10 @@ export default function CategoryTableRow({
               category={category}
               categories={categories}
               onClose={() => setIsEditModalOpen(false)}
+              onCategoryUpdated={() => {
+                setIsEditModalOpen(false);
+                router.refresh();
+              }}
             />
           </div>
         </div>

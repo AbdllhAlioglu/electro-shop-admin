@@ -1,7 +1,7 @@
 "use client";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import StockStatus from "./StockStatus";
-import IconButton from "@/app/ui/IconButton";
+import IconButton from "@/app/_components/IconButton";
 import { deleteProduct } from "@/services/apiProducts";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";

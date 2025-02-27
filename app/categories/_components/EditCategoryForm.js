@@ -1,17 +1,19 @@
 "use client";
 import { useState } from "react";
 import { updateCategory } from "@/services/apiCategories";
-import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createNotification } from "@/services/apiNotifications";
 
-export default function EditCategoryForm({ category, categories, onClose }) {
+export default function EditCategoryForm({
+  category,
+  categories,
+  onClose,
+  onCategoryUpdated,
+}) {
   const [formData, setFormData] = useState({
     name: category.name,
     parent_id: category.parent_id || "",
   });
-
-  const queryClient = useQueryClient();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,9 +29,9 @@ export default function EditCategoryForm({ category, categories, onClose }) {
         entity_id: category.id,
         description: `"${dataToSubmit.name}" kategorisi güncellendi`,
       });
-      queryClient.invalidateQueries({ queryKey: ["categories"] });
       toast.success("Kategori başarıyla güncellendi");
-      onClose();
+      if (onCategoryUpdated) onCategoryUpdated();
+      else onClose();
     } catch (error) {
       toast.error("Kategori güncellenirken bir hata oluştu: " + error.message);
     }

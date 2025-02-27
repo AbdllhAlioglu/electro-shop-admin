@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from "@/lib/supabase";
 
 export async function getBrands() {
   const { data: brands, error } = await supabase.from("brand").select("*");
