@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/app/_lib/supabase";
 
 export async function createNotification({
   action_type,

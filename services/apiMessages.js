@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/app/_lib/supabase";
 
 export const getMessages = async () => {
   const { data: messages, error } = await supabase.from("messages").select("*");
