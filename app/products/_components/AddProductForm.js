@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { addProduct } from "@/services/apiProducts";
 import toast from "react-hot-toast";
 import { createNotification } from "@/services/apiNotifications";
+import { useRouter } from "next/navigation";
 
 export default function AddProductForm({ onProductAdded, categories, brands }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +14,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
     reset,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
   const onSubmit = async (data) => {
     try {
@@ -49,9 +51,9 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
       // Formu resetle
       reset();
 
-      // En son callback'i çağır ve component'in yeniden render olmasını sağla
+      // Call the onProductAdded callback which will use router.refresh()
       if (onProductAdded) {
-        await onProductAdded();
+        onProductAdded();
       }
     } catch (error) {
       console.error("Ürün eklenirken hata detayı:", error);

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { updateProduct } from "@/services/apiProducts";
-import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { createNotification } from "@/services/apiNotifications";
 
@@ -19,7 +19,7 @@ export default function EditProductForm({
     brand_id: product.brand_id,
   });
 
-  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ export default function EditProductForm({
         description: `"${formData.name}" ürünü güncellendi`,
       });
 
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      router.refresh();
       toast.success("Ürün başarıyla güncellendi");
       onClose();
     } catch (error) {

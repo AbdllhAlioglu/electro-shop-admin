@@ -3,12 +3,12 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import StockStatus from "./StockStatus";
 import IconButton from "@/app/_components/IconButton";
 import { deleteProduct } from "@/services/apiProducts";
-import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 import EditProductForm from "./EditProductForm";
 import { convertPrice, formatPrice } from "@/services/currencyService";
 import { createNotification } from "@/services/apiNotifications";
+import { useRouter } from "next/navigation";
 
 export default function ProductTableRow({
   product,
@@ -19,7 +19,7 @@ export default function ProductTableRow({
   exchangeRates,
 }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const queryClient = useQueryClient();
+  const router = useRouter();
   const [currentCurrency, setCurrentCurrency] = useState("TRY");
 
   useEffect(() => {
@@ -27,17 +27,8 @@ export default function ProductTableRow({
     const savedCurrency = localStorage.getItem("selectedCurrency");
     if (savedCurrency) {
       setCurrentCurrency(savedCurrency);
-      queryClient.setQueryData(["settings", "currency"], savedCurrency);
     }
-  }, [queryClient]);
-
-  // React Query'den para birimi değişikliklerini dinle
-  useEffect(() => {
-    const currency = queryClient.getQueryData(["settings", "currency"]);
-    if (currency) {
-      setCurrentCurrency(currency);
-    }
-  }, [queryClient]);
+  }, []);
 
   const handleDelete = async () => {
     toast((t) => (
@@ -67,7 +58,7 @@ export default function ProductTableRow({
                   description: `"${product.name}" ürünü silindi`,
                 });
 
-                queryClient.invalidateQueries({ queryKey: ["products"] });
+                router.refresh();
                 onDelete(product);
                 toast.success("Ürün başarıyla silindi");
               } catch (error) {
