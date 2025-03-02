@@ -1,4 +1,5 @@
 import DashboardCard from "@/app/_components/DashboardCard";
+import WelcomeBanner from "@/app/_components/WelcomeBanner";
 import { getProducts } from "@/services/apiProducts";
 import { getCategories } from "@/services/apiCategories";
 import { FiPackage, FiGrid, FiAlertCircle } from "react-icons/fi";
@@ -17,6 +18,8 @@ export default async function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">Ana Sayfa</h1>
+
+      <WelcomeBanner />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
         <DashboardCard
