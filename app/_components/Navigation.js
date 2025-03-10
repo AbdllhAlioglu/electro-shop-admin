@@ -4,9 +4,13 @@ import Image from "next/image";
 import { auth } from "@/app/_lib/auth";
 import LogoutButton from "./LogoutButton";
 import { FiBell, FiMessageSquare, FiHelpCircle } from "react-icons/fi";
+import { getNotifications } from "@/services/apiNotifications";
 
 export default async function Navigation() {
   const session = await auth();
+  const notifications = await getNotifications();
+
+  const countNotifications = notifications.length;
 
   return (
     <nav className="flex justify-end">
@@ -19,7 +23,7 @@ export default async function Navigation() {
             <FiBell className="w-5 h-5" />
             <span>Bildirimler</span>
             <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full ml-1">
-              0
+              {countNotifications}
             </span>
           </Link>
         </li>

@@ -12,6 +12,10 @@ const authConfig = {
   pages: {
     signIn: "/login",
   },
+  session: {
+    maxAge: 60 * 10,
+    updateAge: 60 * 5,
+  },
   callbacks: {
     authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user;
