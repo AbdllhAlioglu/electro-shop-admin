@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/public/logo.png";
 import { auth } from "@/app/_lib/auth";
 import LogoutButton from "./LogoutButton";
 import { FiBell, FiMessageSquare, FiHelpCircle } from "react-icons/fi";
@@ -53,7 +52,8 @@ export default async function Navigation() {
                   <Image
                     src={session.user.image}
                     alt="Profil Resmi"
-                    fill
+                    width={32}
+                    height={32}
                     className="object-cover"
                   />
                 </div>

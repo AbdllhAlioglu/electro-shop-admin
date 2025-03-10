@@ -1,5 +1,6 @@
 import { supabase } from "@/app/_lib/supabase";
 
+// Create a new notification
 export async function createNotification({
   action_type,
   entity_type,
@@ -22,6 +23,7 @@ export async function createNotification({
   return data;
 }
 
+// Get all notifications
 export async function getNotifications() {
   const { data, error } = await supabase
     .from("notifications")

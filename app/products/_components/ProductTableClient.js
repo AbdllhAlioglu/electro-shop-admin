@@ -16,7 +16,7 @@ export default function ProductTableClient({ products, categories, brands }) {
   const { data: exchangeRates } = useQuery({
     queryKey: ["exchangeRates"],
     queryFn: () => getExchangeRates(),
-    staleTime: 1000 * 60 * 60, // 1 saat
+    staleTime: 1000 * 60, // 1 minute
   });
 
   // Filtreleme ve sıralama fonksiyonu
@@ -79,7 +79,7 @@ export default function ProductTableClient({ products, categories, brands }) {
         categories={categories}
       />
 
-      <table className="min-w-full bg-white">
+      <table className="min-w-full bg-white rounded-lg ">
         <ProductTableHeader />
         <ProductTableBody
           products={filteredProducts}

@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Electro-Shop Admin Paneli
 
-## Getting Started
+Bu proje, [Next.js](https://nextjs.org) kullanılarak geliştirilmiş bir e-ticaret yönetim panelidir.
 
-First, run the development server:
+## Proje Hakkında
+
+Electro-Shop Admin Paneli, elektronik ürün satışı yapan bir e-ticaret sitesinin yönetim arayüzüdür. Bu panel sayesinde:
+
+- Ürün ekleme, düzenleme ve silme
+- Stok takibi
+- Sipariş yönetimi
+- Müşteri bilgilerini görüntüleme
+- Satış ve gelir raporları
+- Döviz kuru dönüşümleri ve fiyatlandırma
+
+gibi işlemleri kolayca gerçekleştirebilirsiniz.
+
+## Başlangıç
+
+Projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları izleyin:
+
+1. Projeyi klonlayın
+2. Gerekli bağımlılıkları yükleyin:
+
+```bash
+npm install
+# veya
+yarn install
+# veya
+pnpm install
+```
+
+3. Geliştirme sunucusunu başlatın:
 
 ```bash
 npm run dev
-# or
+# veya
 yarn dev
-# or
+# veya
 pnpm dev
-# or
+# veya
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açarak uygulamayı görüntüleyebilirsiniz.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Özellikler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Döviz Kuru Dönüşümü
 
-## Learn More
+Sistem, farklı para birimleri arasında otomatik dönüşüm yapabilmektedir. Bu özellik sayesinde:
 
-To learn more about Next.js, take a look at the following resources:
+- Ürün fiyatlarını farklı para birimlerinde görüntüleme
+- Satış raporlarını istediğiniz para biriminde alma
+- Güncel döviz kurlarıyla otomatik hesaplama
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+işlemlerini gerçekleştirebilirsiniz.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Kullanıcı Yönetimi
 
-## Deploy on Vercel
+- Rol tabanlı yetkilendirme sistemi
+- Güvenli oturum yönetimi
+- Kullanıcı aktivite logları
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Ürün Yönetimi
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Kategorilere göre ürün organizasyonu
+- Toplu ürün işlemleri
+- Ürün varyasyonları ve özellikleri yönetimi
+
+## Teknik Detaylar
+
+Bu proje aşağıdaki teknolojileri kullanmaktadır:
+
+- **Next.js**: React tabanlı web framework
+- **Tailwind CSS**: Stil ve tasarım için
+- **API Entegrasyonları**: Döviz kuru ve diğer servisler için
+- **Veritabanı**: Ürün ve kullanıcı verilerinin saklanması için
+
+## Destek ve İletişim
+
+Herhangi bir sorun veya öneriniz için lütfen issue açın veya proje yöneticisiyle iletişime geçin.
+
+## Lisans
+
+Bu proje [MIT lisansı](LICENSE) altında lisanslanmıştır.

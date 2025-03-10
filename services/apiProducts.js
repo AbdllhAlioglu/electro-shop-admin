@@ -1,5 +1,6 @@
 import { supabase } from "@/app/_lib/supabase";
 
+// Get all products
 export async function getProducts() {
   const { data: products, error } = await supabase.from("products").select("*");
 
@@ -11,6 +12,7 @@ export async function getProducts() {
   return products;
 }
 
+// Delete a product
 export async function deleteProduct(id) {
   const { error } = await supabase.from("products").delete().eq("id", id);
   if (error) {
@@ -19,6 +21,7 @@ export async function deleteProduct(id) {
   }
 }
 
+// Add a new product
 export async function addProduct(productData) {
   try {
     const { data, error } = await supabase
@@ -42,6 +45,7 @@ export async function addProduct(productData) {
   }
 }
 
+// Update a product
 export async function updateProduct(id, updatedData) {
   const { data, error } = await supabase
     .from("products")

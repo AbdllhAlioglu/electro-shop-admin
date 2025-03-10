@@ -1,5 +1,6 @@
 import { supabase } from "@/app/_lib/supabase";
 
+// Get all categories
 export async function getCategories() {
   const { data: categories, error } = await supabase
     .from("category")
@@ -13,6 +14,7 @@ export async function getCategories() {
   return categories;
 }
 
+// Add a new category
 export async function addCategory(categoryData) {
   const { data, error } = await supabase
     .from("category")
@@ -27,6 +29,7 @@ export async function addCategory(categoryData) {
   return data;
 }
 
+// Update a category
 export async function updateCategory(id, categoryData) {
   const { data, error } = await supabase
     .from("category")
@@ -42,6 +45,7 @@ export async function updateCategory(id, categoryData) {
   return data;
 }
 
+// Delete a category
 export async function deleteCategory(id) {
   const { error } = await supabase.from("category").delete().eq("id", id);
 
@@ -51,6 +55,7 @@ export async function deleteCategory(id) {
   }
 }
 
+// Check if a category has products
 export async function checkCategoryHasProducts(categoryId) {
   const { data, error } = await supabase
     .from("products")

@@ -1,5 +1,6 @@
 import { supabase } from "@/app/_lib/supabase";
 
+// Get all messages
 export const getMessages = async () => {
   const { data: messages, error } = await supabase.from("messages").select("*");
   if (error) {
@@ -9,6 +10,7 @@ export const getMessages = async () => {
   return messages;
 };
 
+// Update a message as read
 export const updateMessageIsRead = async (id, updatedData) => {
   const { data, error } = await supabase
     .from("messages")
@@ -24,6 +26,7 @@ export const updateMessageIsRead = async (id, updatedData) => {
   return data[0];
 };
 
+// Delete a message
 export const deleteMessage = async (id) => {
   const { error } = await supabase.from("messages").delete().eq("id", id);
 

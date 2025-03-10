@@ -1,6 +1,6 @@
 export default function ProductTableHeader() {
   return (
-    <thead className="bg-gray-800">
+    <thead className="bg-gray-800 rounded-lg">
       <tr>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           Ürün Adı

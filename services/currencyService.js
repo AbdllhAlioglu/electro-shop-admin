@@ -1,11 +1,13 @@
 const API_KEY = process.env.NEXT_PUBLIC_EXCHANGE_RATE_API_KEY;
 
+// Get exchange rates from API
 export async function getExchangeRates(baseCurrency = "TRY") {
   try {
     const response = await fetch(
       `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`
     );
     const data = await response.json();
+    console.log(data);
     return data.conversion_rates;
   } catch (error) {
     console.error("Döviz kurları alınırken hata:", error);
@@ -13,6 +15,7 @@ export async function getExchangeRates(baseCurrency = "TRY") {
   }
 }
 
+// Convert price from one currency to another
 export function convertPrice(price, fromCurrency, toCurrency, rates) {
   if (!rates || !rates[toCurrency]) {
     return price;
@@ -29,6 +32,7 @@ export function convertPrice(price, fromCurrency, toCurrency, rates) {
   return toCurrency === "TRY" ? tryPrice : tryPrice * rates[toCurrency];
 }
 
+// Format price to Turkish locale
 export function formatPrice(price, currency) {
   const formatter = new Intl.NumberFormat("tr-TR", {
     style: "currency",
