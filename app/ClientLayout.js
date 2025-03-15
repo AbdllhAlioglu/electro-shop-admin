@@ -1,14 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import LeftMenu from "./_components/LeftMenu";
-import Providers from "./providers";
-import SessionOverlay from "./_components/SessionOverlay";
-import { usePathname } from "next/navigation";
 
 export default function ClientLayout({ children }) {
   const [theme, setTheme] = useState("light");
-  const pathname = usePathname();
-  const isLoginPage = pathname === "/login";
 
   useEffect(() => {
     // localStorage'dan tema ayarını al
@@ -21,21 +16,16 @@ export default function ClientLayout({ children }) {
 
   return (
     <div className="flex-1 theme-transition" data-theme={theme}>
-      <Providers>
-        {/* Login sayfasında değilse SessionOverlay'i göster */}
-        {!isLoginPage && <SessionOverlay />}
-
-        <div className="flex-1 px-8 py-12 grid grid-cols-4 gap-8 overflow-hidden theme-bg">
-          <div className="col-span-1 theme-card rounded-lg p-4 border-r">
-            <LeftMenu />
-          </div>
-          <div className="col-span-3">
-            <main className="max-w-7xl mx-auto pr-4 h-[calc(100vh-136px)] overflow-y-auto">
-              {children}
-            </main>
-          </div>
+      <div className="flex-1 px-8 py-12 grid grid-cols-4 gap-8 overflow-hidden theme-bg">
+        <div className="col-span-1 theme-card rounded-lg p-4 border-r">
+          <LeftMenu />
         </div>
-      </Providers>
+        <div className="col-span-3">
+          <main className="max-w-7xl mx-auto pr-4 h-[calc(100vh-136px)] overflow-y-auto">
+            {children}
+          </main>
+        </div>
+      </div>
     </div>
   );
 }

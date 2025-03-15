@@ -1,14 +1,13 @@
 import { Josefin_Sans } from "next/font/google";
 import "../app/_styles/globals.css";
-import ClientLayout from "./ClientLayout";
+import RootLayoutClient from "./_components/RootLayoutClient";
 import Header from "./_components/Header";
-import ClientToaster from "./ClientToaster";
-import { auth } from "./_lib/auth";
-import LoginLayout from "./login/layout";
+import Providers from "./providers";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-josefin",
 });
 
 export const metadata = {
@@ -20,16 +19,14 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const session = await auth();
-
   return (
-    <html lang="en">
-      <body className={josefin.variable}>
-        <div className="antialiased h-screen flex flex-col">
-          <Header />
-          <ClientLayout>{children}</ClientLayout>
-          <ClientToaster />
-        </div>
+    <html lang="en" className={josefin.variable}>
+      <body className="min-h-screen bg-gray-50">
+        <Providers>
+          <RootLayoutClient header={await Header()}>
+            {children}
+          </RootLayoutClient>
+        </Providers>
       </body>
     </html>
   );
