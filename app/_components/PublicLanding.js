@@ -17,7 +17,7 @@ export default function PublicLanding() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     email: "abdullahalioglu37@gmail.com",
-    password: "samsun55",
+    password: "",
     rememberMe: false,
   });
 

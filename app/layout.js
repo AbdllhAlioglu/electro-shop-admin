@@ -3,6 +3,7 @@ import "../app/_styles/globals.css";
 import RootLayoutClient from "./_components/RootLayoutClient";
 import Header from "./_components/Header";
 import Providers from "./providers";
+import AuthProvider from "./_components/AuthProvider";
 
 const josefin = Josefin_Sans({
   subsets: ["latin"],
@@ -23,9 +24,11 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={josefin.variable}>
       <body className="min-h-screen bg-gray-50">
         <Providers>
-          <RootLayoutClient header={await Header()}>
-            {children}
-          </RootLayoutClient>
+          <AuthProvider>
+            <RootLayoutClient header={await Header()}>
+              {children}
+            </RootLayoutClient>
+          </AuthProvider>
         </Providers>
       </body>
     </html>

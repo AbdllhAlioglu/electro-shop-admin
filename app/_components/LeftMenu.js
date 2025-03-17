@@ -5,7 +5,7 @@ export default function LeftMenu() {
   return (
     <nav className="flex flex-col gap-4  ">
       <Link
-        href="/"
+        href="/dashboard"
         className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md"
       >
         Ana Sayfa

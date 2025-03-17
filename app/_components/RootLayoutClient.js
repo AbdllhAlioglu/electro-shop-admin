@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import ClientLayout from "../ClientLayout";
-import ClientToaster from "../ClientToaster";
 
 export default function RootLayoutClient({ children, header }) {
   const pathname = usePathname();
@@ -16,7 +15,6 @@ export default function RootLayoutClient({ children, header }) {
     <div className="antialiased h-screen flex flex-col">
       {header}
       <ClientLayout>{children}</ClientLayout>
-      <ClientToaster />
     </div>
   );
 }
