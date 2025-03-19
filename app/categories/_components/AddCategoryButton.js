@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import AddCategoryForm from "./AddCategoryForm";
-import { useRouter } from "next/navigation";
 
 export default function AddCategoryButton({ categories }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const router = useRouter();
+
+  const handleCategoryAdded = () => {
+    setIsAddModalOpen(false);
+  };
 
   return (
     <>
@@ -33,10 +35,7 @@ export default function AddCategoryButton({ categories }) {
             </div>
             <AddCategoryForm
               categories={categories}
-              onCategoryAdded={() => {
-                setIsAddModalOpen(false);
-                router.refresh(); // Use Next.js router refresh instead of React Query
-              }}
+              onCategoryAdded={handleCategoryAdded}
             />
           </div>
         </div>

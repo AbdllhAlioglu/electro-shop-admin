@@ -1,9 +1,8 @@
 "use client";
 import { useState } from "react";
-import { updateProduct } from "@/services/apiProducts";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { createNotification } from "@/services/apiNotifications";
+import { useUpdateProduct } from "@/app/_hooks/useProducts";
 
 export default function EditProductForm({
   product,
@@ -19,27 +18,21 @@ export default function EditProductForm({
     brand_id: product.brand_id,
   });
 
-  const router = useRouter();
+  const { mutate: updateProduct, isLoading } = useUpdateProduct();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await updateProduct(product.id, formData);
-
-      // Bildirim oluştur
-      await createNotification({
-        action_type: "update",
-        entity_type: "product",
-        entity_id: product.id,
-        description: `"${formData.name}" ürünü güncellendi`,
-      });
-
-      router.refresh();
-      toast.success("Ürün başarıyla güncellendi");
-      onClose();
-    } catch (error) {
-      toast.error("Ürün güncellenirken bir hata oluştu: " + error.message);
-    }
+    updateProduct(
+      {
+        id: product.id,
+        data: formData,
+      },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+      }
+    );
   };
 
   return (
@@ -54,6 +47,7 @@ export default function EditProductForm({
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           required
+          disabled={isLoading}
         />
       </div>
 
@@ -67,6 +61,7 @@ export default function EditProductForm({
           }
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           required
+          disabled={isLoading}
         />
       </div>
 
@@ -80,6 +75,7 @@ export default function EditProductForm({
           }
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
           required
+          disabled={isLoading}
         />
       </div>
 
@@ -93,6 +89,7 @@ export default function EditProductForm({
             setFormData({ ...formData, category_id: e.target.value })
           }
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+          disabled={isLoading}
         >
           <option value="">Seçiniz</option>
           {categories.map((category) => (
@@ -111,6 +108,7 @@ export default function EditProductForm({
             setFormData({ ...formData, brand_id: e.target.value })
           }
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+          disabled={isLoading}
         >
           <option value="">Seçiniz</option>
           {brands.map((brand) => (
@@ -126,14 +124,16 @@ export default function EditProductForm({
           type="button"
           onClick={onClose}
           className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md"
+          disabled={isLoading}
         >
           İptal
         </button>
         <button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded-md"
+          disabled={isLoading}
         >
-          Kaydet
+          {isLoading ? "Kaydediliyor..." : "Kaydet"}
         </button>
       </div>
     </form>

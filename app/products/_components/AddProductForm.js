@@ -1,68 +1,55 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { addProduct } from "@/services/apiProducts";
 import toast from "react-hot-toast";
-import { createNotification } from "@/services/apiNotifications";
-import { useRouter } from "next/navigation";
+import { useAddProduct } from "@/app/_hooks/useProducts";
 
 export default function AddProductForm({ onProductAdded, categories, brands }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [maxLength, setMaxLength] = useState(200);
+  const [countLength, setCountLength] = useState(0);
+
+  // Control the description count
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setCountLength(value.length);
+    if (value.length > maxLength) {
+      setMaxLength(value.length);
+    }
+  };
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-  const router = useRouter();
 
-  const onSubmit = async (data) => {
-    try {
-      setIsLoading(true);
-      const formattedData = {
-        ...data,
-        features: JSON.stringify(
-          data.features.split("\n").filter((feature) => feature.trim() !== "")
-        ),
-        category_id: parseInt(data.category_id),
-        brand_id: parseInt(data.brand_id),
-        stock: parseInt(data.stock),
-        power: parseInt(data.power),
-        price: parseFloat(data.price),
-      };
+  const { mutate: addProduct, isLoading } = useAddProduct();
 
-      const newProduct = await addProduct(formattedData);
+  const onSubmit = (data) => {
+    const formattedData = {
+      ...data,
+      features: JSON.stringify(
+        data.features.split("\n").filter((feature) => feature.trim() !== "")
+      ),
+      category_id: parseInt(data.category_id),
+      brand_id: parseInt(data.brand_id),
+      stock: parseInt(data.stock),
+      power: parseInt(data.power),
+      price: parseFloat(data.price),
+    };
 
-      if (!newProduct || !newProduct[0]) {
-        throw new Error("Ürün eklenemedi");
-      }
+    addProduct(formattedData, {
+      onSuccess: () => {
+        // Formu resetle
+        reset();
 
-      // Önce bildirimi oluştur
-      await createNotification({
-        action_type: "create",
-        entity_type: "product",
-        entity_id: newProduct[0].id,
-        description: `"${data.name}" ürünü eklendi`,
-      });
-
-      // Başarı mesajını göster
-      toast.success("Ürün başarıyla eklendi!");
-
-      // Formu resetle
-      reset();
-
-      // Call the onProductAdded callback which will use router.refresh()
-      if (onProductAdded) {
-        onProductAdded();
-      }
-    } catch (error) {
-      console.error("Ürün eklenirken hata detayı:", error);
-      toast.error(
-        `Ürün eklenirken bir hata oluştu: ${error.message || "Bilinmeyen hata"}`
-      );
-    } finally {
-      setIsLoading(false);
-    }
+        // Modalı kapat
+        if (onProductAdded) {
+          onProductAdded();
+        }
+      },
+    });
   };
 
   return (
@@ -76,6 +63,10 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
           type="text"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Ürün adını giriniz"
+          autoComplete="false"
+          maxLength={200}
+          disabled={isLoading}
         />
         {errors.name && (
           <span className="text-red-400 text-sm mt-1">
@@ -86,13 +77,17 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
 
       <div>
         <label className="block text-sm font-medium text-primary-200 mb-1">
-          Açıklama
+          Açıklama {countLength}/{maxLength}
         </label>
         <textarea
           {...register("description")}
           rows="3"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Ürünün açıklamasını giriniz..."
+          onChange={handleChange}
+          maxLength={maxLength}
+          disabled={isLoading}
         />
       </div>
 
@@ -110,7 +105,12 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
             step="0.01"
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
               placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="00,00 ₺"
+            min={0}
+            max={100000}
+            disabled={isLoading}
           />
+
           {errors.price && (
             <span className="text-red-400 text-sm mt-1">
               {errors.price.message}
@@ -130,6 +130,10 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
             type="number"
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
               placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="0"
+            min={0}
+            max={1000}
+            disabled={isLoading}
           />
           {errors.stock && (
             <span className="text-red-400 text-sm mt-1">
@@ -148,6 +152,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
             {...register("brand_id", { required: "Marka seçimi gerekli" })}
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            disabled={isLoading}
           >
             <option value="">Marka Seçin</option>
             {brands?.map((brand) => (
@@ -173,6 +178,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
             })}
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            disabled={isLoading}
           >
             <option value="">Kategori Seçin</option>
             {categories?.map((category) => (
@@ -201,6 +207,16 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
           type="number"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="0"
+          min={0}
+          max={1000}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value > 1000) {
+              e.target.value = 1000;
+            }
+          }}
+          disabled={isLoading}
         />
         {errors.power && (
           <span className="text-red-400 text-sm mt-1">
@@ -218,20 +234,33 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
           rows="4"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          placeholder="Özellik 1&#10;Özellik 2&#10;Özellik 3"
+          placeholder="- Özellik 1&#10;- Özellik 2&#10;- Özellik 3"
+          disabled={isLoading}
         />
       </div>
 
-      <div className="flex justify-end">
+      <div>
+        <label className="block text-sm font-medium text-primary-200 mb-1">
+          Ek Bilgiler
+        </label>
+        <textarea
+          {...register("additional_info")}
+          rows="2"
+          className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
+            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Ek bilgiler..."
+          disabled={isLoading}
+        />
+      </div>
+
+      <div className="flex justify-end pt-3">
         <button
           type="submit"
+          className="inline-flex items-center justify-center bg-blue-600 text-white py-2 px-6 rounded-md 
+            hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm"
           disabled={isLoading}
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
-            focus:ring-offset-primary-800 disabled:bg-blue-800 disabled:cursor-not-allowed
-            transition-colors duration-200"
         >
-          {isLoading ? "Ekleniyor..." : "Ürün Ekle"}
+          {isLoading ? "Ekleniyor..." : "Ekle"}
         </button>
       </div>
     </form>

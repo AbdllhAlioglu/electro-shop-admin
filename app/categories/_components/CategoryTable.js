@@ -1,3 +1,4 @@
+"use client";
 import CategoryTableRow from "./CategoryTableRow";
 
 // Find parent category name helper function
@@ -7,7 +8,9 @@ function getParentCategoryName(categories, parentId) {
   return parent ? parent.name : "-";
 }
 
-export default function CategoryTable({ categories }) {
+export default function CategoryTable({ initialCategories }) {
+  const categories = initialCategories;
+
   return (
     <div className="overflow-x-auto rounded-lg shadow-lg">
       <table className="min-w-full bg-white">

@@ -1,6 +1,18 @@
+"use client";
 import MessageTableRow from "./MessageTableRow";
+import { useMessages } from "@/app/_hooks/useMessages";
 
-export default function MessageTable({ messages }) {
+export default function MessageTable({ initialMessages }) {
+  const { data: messages = initialMessages, isLoading } = useMessages();
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-x-auto rounded-lg shadow-lg">
       <table className="min-w-full bg-white">

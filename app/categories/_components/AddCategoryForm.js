@@ -1,12 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { addCategory } from "@/services/apiCategories";
 import toast from "react-hot-toast";
-import { createNotification } from "@/services/apiNotifications";
+import { useAddCategory } from "@/app/_hooks/useCategories";
 
 export default function AddCategoryForm({ onCategoryAdded, categories }) {
-  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -14,32 +12,20 @@ export default function AddCategoryForm({ onCategoryAdded, categories }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    try {
-      setIsLoading(true);
-      const formattedData = {
-        ...data,
-        parent_id: data.parent_id || null,
-      };
+  const { mutate: addCategory, isLoading } = useAddCategory();
 
-      const newCategory = await addCategory(formattedData);
+  const onSubmit = (data) => {
+    const formattedData = {
+      ...data,
+      parent_id: data.parent_id || null,
+    };
 
-      await createNotification({
-        action_type: "create",
-        entity_type: "category",
-        entity_id: newCategory[0].id,
-        description: `"${data.name}" kategorisi eklendi`,
-      });
-
-      toast.success("Kategori başarıyla eklendi!");
-      reset();
-      if (onCategoryAdded) onCategoryAdded();
-    } catch (error) {
-      console.error("Kategori eklenirken hata oluştu:", error);
-      toast.error("Kategori eklenirken bir hata oluştu!");
-    } finally {
-      setIsLoading(false);
-    }
+    addCategory(formattedData, {
+      onSuccess: () => {
+        reset();
+        if (onCategoryAdded) onCategoryAdded();
+      },
+    });
   };
 
   return (
@@ -53,6 +39,7 @@ export default function AddCategoryForm({ onCategoryAdded, categories }) {
           type="text"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          disabled={isLoading}
         />
         {errors.name && (
           <span className="text-red-400 text-sm mt-1">
@@ -69,6 +56,7 @@ export default function AddCategoryForm({ onCategoryAdded, categories }) {
           {...register("parent_id")}
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          disabled={isLoading}
         >
           <option value="">Üst Kategori Yok</option>
           {categories?.map((category) => (

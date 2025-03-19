@@ -1,16 +1,13 @@
 "use client";
 import { useState } from "react";
 import AddProductForm from "./AddProductForm";
-import { useRouter } from "next/navigation";
 import ProductModal from "./ProductModal";
 
 export default function AddProductButton({ categories, brands }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const router = useRouter();
 
   const handleProductAdded = () => {
     setIsAddModalOpen(false);
-    router.refresh(); // Use Next.js router refresh instead of React Query
   };
 
   return (

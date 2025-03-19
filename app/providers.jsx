@@ -10,8 +10,10 @@ export default function Providers({ children }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 0,
-            refetchOnWindowFocus: false,
+            staleTime: 10 * 1000, // 10 saniye
+            refetchOnWindowFocus: true, // Sekme aktif olduğunda yenile
+            retry: 1, // Başarısız sorguları sadece 1 kez yeniden dene
+            refetchOnReconnect: true, // Bağlantı tekrar kurulduğunda yeniden veri çek
           },
         },
       })

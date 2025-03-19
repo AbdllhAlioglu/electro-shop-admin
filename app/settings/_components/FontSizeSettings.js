@@ -24,7 +24,7 @@ export default function FontSizeSettings() {
       localStorage.setItem("selectedFontSize", fontSizeId);
       const fontSize = FONT_SIZES.find((f) => f.id === fontSizeId)?.scale;
       document.documentElement.style.fontSize = `${fontSize}rem`;
-      toast.success("Yazı boyutu başarıyla güncellendi!");
+      toast.success(`Yazı boyutu ${fontSize} olarak güncellendi!`);
     } catch (error) {
       toast.error("Yazı boyutu güncellenirken bir hata oluştu!");
       console.error("Yazı boyutu güncellenirken hata:", error);

@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
-  deleteNotification,
   markNotificationAsRead,
   markAllNotificationsAsRead,
-  getNotifications,
 } from "@/services/apiNotifications";
 import { groupNotificationsByDate } from "./NotificationUtils";
 import NotificationHeader from "./NotificationHeader";
@@ -14,69 +12,50 @@ import NotificationGroup from "./NotificationGroup";
 import EmptyNotifications from "./EmptyNotifications";
 import LoadingSpinner from "./LoadingSpinner";
 import toast from "react-hot-toast";
+import { useDeleteNotification } from "@/app/_hooks/useNotifications";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function NotificationContainer({ initialNotifications }) {
-  const [notifications, setNotifications] = useState(
-    initialNotifications || []
-  );
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+export default function NotificationContainer({ notifications = [] }) {
   const [filterType, setFilterType] = useState("all");
+  const queryClient = useQueryClient();
 
-  // Bildirimleri yükle
-  const loadNotifications = async () => {
-    try {
-      setIsLoading(true);
-      const data = await getNotifications();
-      setNotifications(data);
-      toast.success("Bildirimler güncellendi");
-    } catch (error) {
-      console.error("Bildirimler yüklenirken hata:", error);
-      toast.error("Bildirimler yüklenirken bir hata oluştu");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Bildirim silme mutation'ı
+  const { mutate: deleteNotification, isLoading: isDeleting } =
+    useDeleteNotification();
 
-  // Bildirimi sil
-  const handleDeleteNotification = async (id) => {
-    try {
-      setIsDeleting(true);
-      await deleteNotification(id);
-      setNotifications(notifications.filter((n) => n.id !== id));
-      toast.success("Bildirim silindi");
-    } catch (error) {
-      console.error("Bildirim silinirken hata:", error);
-      toast.error("Bildirim silinirken bir hata oluştu");
-    } finally {
-      setIsDeleting(false);
-    }
-  };
-
-  // Bildirimi okundu olarak işaretle
-  const handleMarkAsRead = async (id) => {
-    try {
-      await markNotificationAsRead(id);
-      setNotifications(
-        notifications.map((n) => (n.id === id ? { ...n, isRead: true } : n))
+  // Okundu olarak işaretleme mutation'ı
+  const { mutate: markAsRead } = useMutation({
+    mutationFn: markNotificationAsRead,
+    onSuccess: (_, id) => {
+      queryClient.setQueryData(["notifications"], (old) =>
+        old?.map((n) => (n.id === id ? { ...n, isRead: true } : n))
       );
       toast.success("Bildirim okundu olarak işaretlendi");
-    } catch (error) {
-      console.error("Bildirim işaretlenirken hata:", error);
+    },
+    onError: () => {
       toast.error("Bildirim işaretlenirken bir hata oluştu");
-    }
-  };
+    },
+  });
 
-  // Tüm bildirimleri okundu olarak işaretle
-  const handleMarkAllAsRead = async () => {
-    try {
-      await markAllNotificationsAsRead();
-      setNotifications(notifications.map((n) => ({ ...n, isRead: true })));
+  // Tümünü okundu olarak işaretleme mutation'ı
+  const { mutate: markAllAsRead } = useMutation({
+    mutationFn: markAllNotificationsAsRead,
+    onSuccess: () => {
+      queryClient.setQueryData(["notifications"], (old) =>
+        old?.map((n) => ({ ...n, isRead: true }))
+      );
+      queryClient.invalidateQueries({ queryKey: ["notificationsCount"] });
       toast.success("Tüm bildirimler okundu olarak işaretlendi");
-    } catch (error) {
-      console.error("Bildirimler işaretlenirken hata:", error);
+    },
+    onError: () => {
       toast.error("Bildirimler işaretlenirken bir hata oluştu");
-    }
+    },
+  });
+
+  // Bildirimleri yenile
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["notifications"] });
+    queryClient.invalidateQueries({ queryKey: ["notificationsCount"] });
   };
 
   // Filtre değiştiğinde
@@ -90,11 +69,11 @@ export default function NotificationContainer({ initialNotifications }) {
     filterType
   );
 
-  if (isLoading) {
+  if (isDeleting) {
     return <LoadingSpinner />;
   }
 
-  if (!notifications.length) {
+  if (!notifications?.length) {
     return <EmptyNotifications />;
   }
 
@@ -102,8 +81,8 @@ export default function NotificationContainer({ initialNotifications }) {
     <>
       <NotificationHeader
         totalCount={notifications.length}
-        onMarkAllAsRead={handleMarkAllAsRead}
-        onRefresh={loadNotifications}
+        onMarkAllAsRead={markAllAsRead}
+        onRefresh={handleRefresh}
       />
 
       <NotificationFilters
@@ -118,8 +97,8 @@ export default function NotificationContainer({ initialNotifications }) {
               key={dateLabel}
               dateLabel={dateLabel}
               notifications={notifications}
-              onDelete={handleDeleteNotification}
-              onMarkAsRead={handleMarkAsRead}
+              onDelete={deleteNotification}
+              onMarkAsRead={markAsRead}
               isDeleting={isDeleting}
             />
           )

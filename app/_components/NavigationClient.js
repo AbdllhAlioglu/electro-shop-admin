@@ -12,9 +12,11 @@ import {
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/app/_lib/supabase";
+import { useNotificationsCount } from "@/app/_hooks/useNotifications";
 
-export default function NavigationClient({ notificationCount }) {
+export default function NavigationClient() {
   const router = useRouter();
+  const { data: notificationCount = 0 } = useNotificationsCount();
 
   const handleLogout = () => {
     toast((t) => (
@@ -61,9 +63,11 @@ export default function NavigationClient({ notificationCount }) {
           >
             <FiBell className="w-5 h-5" />
             <span>Bildirimler</span>
-            <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full ml-1">
-              {notificationCount}
-            </span>
+            {notificationCount > 0 && (
+              <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full ml-1">
+                {notificationCount}
+              </span>
+            )}
           </Link>
         </li>
         <li>

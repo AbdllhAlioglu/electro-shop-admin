@@ -1,18 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FiShield,
   FiTrendingUp,
   FiSettings,
   FiMail,
   FiLock,
+  FiPhone,
+  FiMessageCircle,
+  FiClock,
 } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import PublicHeader from "./PublicHeader";
+import Footer from "./ui/Footer";
 import { useLogin } from "@/services/useLogin";
+
 export default function PublicLanding() {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -22,10 +27,11 @@ export default function PublicLanding() {
   });
 
   const { login, isLoading } = useLogin();
+  const [isSupportActive, setIsSupportActive] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Burada gerçek authentication işlemi yapılacak
+
     if (!formData.email && !formData.password) return;
     login({ email: formData.email, password: formData.password });
   };
@@ -34,6 +40,29 @@ export default function PublicLanding() {
     // Google login işlemi buraya gelecek
     console.log("Google login clicked");
   };
+
+  // Destek ekibinin aktif olup olmadığını kontrol et
+  const checkSupportAvailability = () => {
+    const now = new Date();
+    const hours = now.getHours();
+    const isWeekday = now.getDay() !== 0 && now.getDay() !== 6; // 0: Pazar, 6: Cumartesi
+    return isWeekday && hours >= 9 && hours < 17;
+  };
+
+  // Destek durumunu periyodik olarak kontrol et
+  useEffect(() => {
+    const updateSupportStatus = () => {
+      setIsSupportActive(checkSupportAvailability());
+    };
+
+    // İlk kontrol
+    updateSupportStatus();
+
+    // Her dakika kontrol et
+    const interval = setInterval(updateSupportStatus, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -217,30 +246,101 @@ export default function PublicLanding() {
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-100 rounded-xl p-8 text-center">
-              <h2 className="text-2xl font-bold text-blue-800 mb-4">
-                Yardıma mı ihtiyacınız var?
-              </h2>
-              <p className="text-blue-700 mb-6">
-                Teknik destek ekibimiz size yardımcı olmak için hazır.
-              </p>
-              <Link
-                href="/help"
-                className="inline-flex items-center px-4 py-2 bg-white text-blue-600 font-medium rounded-lg border border-blue-200 hover:bg-blue-600 hover:text-white transition-colors"
-              >
-                Destek Alın
-              </Link>
+            {/* Destek Bölümü */}
+            <div className="bg-blue-50 border border-blue-100 rounded-xl p-8">
+              <div className="max-w-3xl mx-auto">
+                <h2 className="text-2xl font-bold text-blue-800 mb-4 text-center">
+                  Yardıma mı ihtiyacınız var?
+                </h2>
+                <p className="text-blue-700 mb-8 text-center">
+                  Teknik destek ekibimiz hafta içi 09:00 - 17:00 saatleri
+                  arasında hizmet vermektedir.
+                </p>
+
+                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                  {/* E-posta Desteği */}
+                  <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <FiMail className="w-5 h-5 text-blue-600" />
+                      <h3 className="font-semibold text-gray-900">E-posta</h3>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-3">
+                      Detaylı destek için e-posta gönderin
+                    </p>
+                    <a
+                      href="mailto:support@electroshop.com"
+                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    >
+                      support@electroshop.com
+                    </a>
+                  </div>
+
+                  {/* Telefon Desteği */}
+                  <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <FiPhone className="w-5 h-5 text-blue-600" />
+                      <h3 className="font-semibold text-gray-900">Telefon</h3>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-3">
+                      Hızlı destek için bizi arayın
+                    </p>
+                    <a
+                      href="tel:+902121234567"
+                      className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    >
+                      0212 123 45 67
+                    </a>
+                  </div>
+
+                  {/* Canlı Destek */}
+                  <div className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3 mb-3">
+                      <FiMessageCircle className="w-5 h-5 text-blue-600" />
+                      <h3 className="font-semibold text-gray-900">
+                        Canlı Destek
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 text-sm mb-3">
+                      Anlık yardım için canlı destek
+                    </p>
+                    <div className="flex items-center gap-2 text-sm">
+                      <FiClock
+                        className={`w-4 h-4 ${
+                          isSupportActive ? "text-green-500" : "text-gray-500"
+                        }`}
+                      />
+                      <span
+                        className={
+                          isSupportActive ? "text-green-600" : "text-gray-600"
+                        }
+                      >
+                        {isSupportActive
+                          ? "Şu an aktif"
+                          : "Mesai saati dışında"}
+                      </span>
+                    </div>
+                    {!isSupportActive && (
+                      <p className="text-xs text-gray-500 mt-2">
+                        Mesai saatleri: Hafta içi 09:00 - 17:00
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <Link
+                    href="/help"
+                    className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Destek Merkezi
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </main>
-      <footer className="bg-gray-800 text-white py-6">
-        <div className="container mx-auto px-4 text-center">
-          <p>
-            © {new Date().getFullYear()} Electro Shop. Tüm hakları saklıdır.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

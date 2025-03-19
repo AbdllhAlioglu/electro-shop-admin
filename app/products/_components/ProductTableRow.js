@@ -2,25 +2,22 @@
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import StockStatus from "./StockStatus";
 import IconButton from "@/app/_components/IconButton";
-import { deleteProduct } from "@/services/apiProducts";
 import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 import EditProductForm from "./EditProductForm";
 import { convertPrice, formatPrice } from "@/services/currencyService";
-import { createNotification } from "@/services/apiNotifications";
 import { useRouter } from "next/navigation";
+import { useDeleteProduct } from "@/app/_hooks/useProducts";
 
 export default function ProductTableRow({
   product,
   categories,
   brands,
-  onEdit,
-  onDelete,
   exchangeRates,
 }) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const router = useRouter();
   const [currentCurrency, setCurrentCurrency] = useState("TRY");
+  const { mutate: deleteProduct, isLoading: isDeleting } = useDeleteProduct();
 
   useEffect(() => {
     // localStorage'dan para birimini al
@@ -30,7 +27,7 @@ export default function ProductTableRow({
     }
   }, []);
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     toast((t) => (
       <div className="flex flex-col gap-4">
         <p>
@@ -45,30 +42,13 @@ export default function ProductTableRow({
           </button>
           <button
             className="px-3 py-1 bg-red-500 text-white rounded-md"
-            onClick={async () => {
+            disabled={isDeleting}
+            onClick={() => {
               toast.dismiss(t.id);
-              try {
-                await deleteProduct(product.id);
-
-                // Bildirim oluştur
-                await createNotification({
-                  action_type: "delete",
-                  entity_type: "product",
-                  entity_id: product.id,
-                  description: `"${product.name}" ürünü silindi`,
-                });
-
-                router.refresh();
-                onDelete(product);
-                toast.success("Ürün başarıyla silindi");
-              } catch (error) {
-                toast.error(
-                  "Ürün silinirken bir hata oluştu: " + error.message
-                );
-              }
+              deleteProduct({ id: product.id, name: product.name });
             }}
           >
-            Sil
+            {isDeleting ? "Siliniyor..." : "Sil"}
           </button>
         </div>
       </div>
@@ -116,6 +96,7 @@ export default function ProductTableRow({
               onClick={handleDelete}
               className="!p-1"
               title="Sil"
+              disabled={isDeleting}
             />
           </div>
         </td>

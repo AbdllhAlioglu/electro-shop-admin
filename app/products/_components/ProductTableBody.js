@@ -5,8 +5,6 @@ export default function ProductTableBody({
   products,
   categories,
   brands,
-  onEdit,
-  onDelete,
   exchangeRates,
 }) {
   return (
@@ -20,8 +18,6 @@ export default function ProductTableBody({
             product={product}
             categories={categories}
             brands={brands}
-            onEdit={onEdit}
-            onDelete={onDelete}
             exchangeRates={exchangeRates}
           />
         ))

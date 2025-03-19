@@ -2,7 +2,7 @@ import { FiTool } from "react-icons/fi";
 
 export default function UnderConstruction({
   title = "Geliştirme Aşamasında",
-  message = "Bu sayfa şu anda geliştirme aşamasındadır. Çok yakında hizmetinizde olacaktır.",
+  message = " Çok yakında hizmetinizde olacaktır.",
 }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh]">

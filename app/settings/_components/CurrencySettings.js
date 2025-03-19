@@ -18,7 +18,7 @@ export default function CurrencySettings() {
     try {
       setSelectedCurrency(currency);
       localStorage.setItem("selectedCurrency", currency);
-      toast.success("Para birimi başarıyla güncellendi!");
+      toast.success(`Para birimi ${currency} olarak güncellendi!`);
     } catch (error) {
       toast.error("Para birimi güncellenirken bir hata oluştu!");
       console.error("Para birimi güncellenirken hata:", error);

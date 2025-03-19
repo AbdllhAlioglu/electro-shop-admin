@@ -9,6 +9,8 @@ const josefin = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-josefin",
+  preload: true,
+  weight: ["400", "700"],
 });
 
 export const metadata = {

@@ -5,14 +5,22 @@ import ProductTableBody from "./ProductTableBody";
 import FilterBar from "./FilterBar";
 import { useQuery } from "@tanstack/react-query";
 import { getExchangeRates } from "@/services/currencyService";
-import { useRouter } from "next/navigation";
+import { useProducts } from "@/app/_hooks/useProducts";
 
-export default function ProductTableClient({ products, categories, brands }) {
-  const router = useRouter();
+export default function ProductTableClient({
+  initialProducts,
+  categories,
+  brands,
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  // Ürünleri React Query ile getir
+  const { data: products = initialProducts, isLoading: isLoadingProducts } =
+    useProducts();
+
+  // Döviz kurlarını getir
   const { data: exchangeRates } = useQuery({
     queryKey: ["exchangeRates"],
     queryFn: () => getExchangeRates(),
@@ -62,10 +70,13 @@ export default function ProductTableClient({ products, categories, brands }) {
 
   const filteredProducts = getFilteredAndSortedProducts();
 
-  const handleDelete = (deletedProduct) => {
-    // After deletion, refresh the page to get updated data
-    router.refresh();
-  };
+  if (isLoadingProducts) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -85,10 +96,6 @@ export default function ProductTableClient({ products, categories, brands }) {
           products={filteredProducts}
           categories={categories}
           brands={brands}
-          onEdit={(product) => {
-            /* Düzenleme modalını aç */
-          }}
-          onDelete={handleDelete}
           exchangeRates={exchangeRates}
         />
       </table>

@@ -6,40 +6,37 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import MessageViewModal from "./MessageViewModal";
 import {
-  updateMessageIsRead,
-  deleteMessage,
-} from "../../../services/apiMessages";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+  useDeleteMessage,
+  useUpdateMessageReadStatus,
+} from "@/app/_hooks/useMessages";
 
 export default function MessageTableRow({ message }) {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isReadMessage, setIsReadMessage] = useState(message.isread);
-
   const router = useRouter();
-  const queryClient = useQueryClient();
 
-  const { mutate: updateReadMutation } = useMutation({
-    mutationFn: ({ id, data }) => updateMessageIsRead(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["messages"]);
-      router.refresh();
-      toast.success("Mesaj okundu olarak işaretlendi");
-    },
-    onError: (error) => {
-      toast.error("Mesaj durumu güncellenirken bir hata oluştu");
-      console.error("Mesaj durumu güncellenirken hata:", error);
-    },
-  });
+  // Mesaj silme mutation'ı
+  const { mutate: deleteMessage, isLoading: isDeleting } = useDeleteMessage();
 
-  const handleMarkAsRead = async () => {
-    updateReadMutation({
-      id: message.id,
-      data: { isread: true },
-    });
-    setIsReadMessage(true);
+  // Okundu olarak işaretleme mutation'ı
+  const { mutate: updateReadStatus, isLoading: isUpdating } =
+    useUpdateMessageReadStatus();
+
+  const handleMarkAsRead = () => {
+    updateReadStatus(
+      {
+        id: message.id,
+        data: { isread: true },
+      },
+      {
+        onSuccess: () => {
+          setIsReadMessage(true);
+        },
+      }
+    );
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     // Show confirmation toast
     toast((t) => (
       <div className="flex flex-col gap-4">
@@ -53,20 +50,13 @@ export default function MessageTableRow({ message }) {
           </button>
           <button
             className="px-3 py-1 bg-red-500 text-white rounded-md"
-            onClick={async () => {
+            disabled={isDeleting}
+            onClick={() => {
               toast.dismiss(t.id);
-              try {
-                await deleteMessage(message.id);
-                toast.success("Mesaj başarıyla silindi");
-                queryClient.invalidateQueries(["messages"]);
-                router.refresh();
-              } catch (error) {
-                toast.error("Mesaj silinirken bir hata oluştu");
-                console.error("Mesaj silinirken hata:", error);
-              }
+              deleteMessage(message.id);
             }}
           >
-            Sil
+            {isDeleting ? "Siliniyor..." : "Sil"}
           </button>
         </div>
       </div>
@@ -123,7 +113,7 @@ export default function MessageTableRow({ message }) {
                 onClick={handleMarkAsRead}
                 className="!p-1 !bg-green-500"
                 title="Okundu Olarak İşaretle"
-                disabled={isReadMessage}
+                disabled={isReadMessage || isUpdating}
               />
             )}
             <IconButton
@@ -132,6 +122,7 @@ export default function MessageTableRow({ message }) {
               onClick={handleDelete}
               className="!p-1"
               title="Sil"
+              disabled={isDeleting}
             />
           </div>
         </td>
