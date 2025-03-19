@@ -19,6 +19,11 @@ export const metadata = {
     default: "Electro Shop Admin Panel",
   },
   description: "Electro Shop Admin Panel",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default async function RootLayout({ children }) {

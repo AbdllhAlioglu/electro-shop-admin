@@ -60,7 +60,7 @@ export function useUpdateCategory() {
     onSuccess: async (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
 
-      // Bildirim oluştur
+      // Bildirim oluşturma
       await createNotification({
         action_type: "update",
         entity_type: "category",
