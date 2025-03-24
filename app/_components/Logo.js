@@ -4,7 +4,10 @@ import React from "react";
 
 export default function Logo() {
   return (
-    <Link href="/dashboard" className="flex items-center gap-2">
+    <Link
+      href="/dashboard"
+      className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-0"
+    >
       <Image
         src="/logo.png"
         alt="logo"

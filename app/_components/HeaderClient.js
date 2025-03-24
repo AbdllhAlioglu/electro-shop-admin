@@ -7,7 +7,7 @@ import NavigationClient from "./NavigationClient";
 export default function HeaderClient({ notificationCount }) {
   return (
     <header className="border-b border-primary-900 px-8 py-5 mx-4">
-      <div className="grid grid-cols-4 gap-8 items-center max-w-7xl mx-2">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="col-span-1 flex items-center">
           <Logo />
         </div>

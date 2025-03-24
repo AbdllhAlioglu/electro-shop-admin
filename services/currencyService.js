@@ -3,15 +3,35 @@ const API_KEY = process.env.NEXT_PUBLIC_EXCHANGE_RATE_API_KEY;
 // Get exchange rates from API
 export async function getExchangeRates(baseCurrency = "TRY") {
   try {
-    const response = await fetch(
-      `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`
-    );
+    // Check if API key is available
+    if (!API_KEY) {
+      console.error("Exchange rate API key not found in environment variables");
+      return null;
+    }
+
+    const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`;
+    console.log("Fetching exchange rates from:", url);
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Exchange rate API error:", response.status, errorText);
+      return null;
+    }
+
     const data = await response.json();
-    console.log(data);
+    console.log("Exchange rates data:", data);
+
+    if (data.result !== "success") {
+      console.error("Exchange rate API returned error:", data);
+      return null;
+    }
+
     return data.conversion_rates;
   } catch (error) {
     console.error("Döviz kurları alınırken hata:", error);
-    throw error;
+    return null;
   }
 }
 

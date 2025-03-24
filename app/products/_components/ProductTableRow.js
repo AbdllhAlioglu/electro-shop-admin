@@ -55,12 +55,13 @@ export default function ProductTableRow({
     ));
   };
 
-  const displayPrice = exchangeRates
-    ? formatPrice(
-        convertPrice(product.price, "TRY", currentCurrency, exchangeRates),
-        currentCurrency
-      )
-    : `${product.price} ₺`;
+  const displayPrice =
+    exchangeRates && Object.keys(exchangeRates).length > 0
+      ? formatPrice(
+          convertPrice(product.price, "TRY", currentCurrency, exchangeRates),
+          currentCurrency
+        )
+      : `${product.price} ₺`;
 
   return (
     <>
