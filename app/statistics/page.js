@@ -1,20 +1,20 @@
 import React from "react";
-import DashboardClient from "./_components/DashboardClient";
+import StatisticsPage from "./_components/StatisticsPage";
 import { getProducts } from "@/services/apiProducts";
 import { getCategories } from "@/services/apiCategories";
 
 export const metadata = {
-  title: "Ana Sayfa | Electro Shop Admin",
-  description: "Electro Shop Admin Panel Ana Sayfası",
+  title: "İstatistikler | Electro Shop Admin",
+  description: "Ürün ve kategori istatistiklerini görüntüleyin",
 };
 
-export default async function DashboardPage() {
+export default async function Page() {
   // Server-side veri çekme - başlangıç verileri
   const initialProducts = await getProducts();
   const initialCategories = await getCategories();
 
   return (
-    <DashboardClient
+    <StatisticsPage
       initialProducts={initialProducts}
       initialCategories={initialCategories}
     />

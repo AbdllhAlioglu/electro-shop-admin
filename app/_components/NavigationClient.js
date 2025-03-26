@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   FiBell,
@@ -8,6 +8,8 @@ import {
   FiHelpCircle,
   FiLogOut,
   FiUser,
+  FiMenu,
+  FiX,
 } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -17,6 +19,11 @@ import { useNotificationsCount } from "@/app/_hooks/useNotifications";
 export default function NavigationClient() {
   const router = useRouter();
   const { data: notificationCount = 0 } = useNotificationsCount();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const handleLogout = () => {
     toast((t) => (
@@ -53,60 +60,96 @@ export default function NavigationClient() {
     ));
   };
 
+  const navItems = (
+    <ul className="flex flex-col md:flex-row items-start md:items-center gap-4">
+      <li>
+        <Link
+          href="/notifications"
+          className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600 w-full"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <FiBell className="w-5 h-5" />
+          <span>Bildirimler</span>
+          {notificationCount > 0 && (
+            <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full ml-1">
+              {notificationCount}
+            </span>
+          )}
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/messages"
+          className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600 w-full"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <FiMessageSquare className="w-5 h-5" />
+          <span>Mesajlar</span>
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/help"
+          className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600 w-full"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <FiHelpCircle className="w-5 h-5" />
+          <span>Yardım</span>
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/profile"
+          className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600 w-full"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <FiUser className="w-5 h-5" />
+          <span>Profil</span>
+        </Link>
+      </li>
+      <li>
+        <button
+          onClick={() => {
+            setIsMenuOpen(false);
+            handleLogout();
+          }}
+          className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600 w-full"
+        >
+          <FiLogOut className="w-5 h-5 text-red-600" />
+          <span className="text-red-600">Çıkış Yap</span>
+        </button>
+      </li>
+    </ul>
+  );
+
   return (
-    <nav className="flex justify-end">
-      <ul className="flex items-center gap-4">
-        <li>
-          <Link
-            href="/notifications"
-            className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600"
-          >
-            <FiBell className="w-5 h-5" />
-            <span>Bildirimler</span>
-            {notificationCount > 0 && (
-              <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full ml-1">
-                {notificationCount}
-              </span>
-            )}
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/messages"
-            className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600"
-          >
-            <FiMessageSquare className="w-5 h-5" />
-            <span>Mesajlar</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/help"
-            className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600"
-          >
-            <FiHelpCircle className="w-5 h-5" />
-            <span>Yardım</span>
-          </Link>
-        </li>
-        <li>
-          <Link
-            href="/profile"
-            className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600"
-          >
-            <FiUser className="w-5 h-5" />
-            <span>Profil</span>
-          </Link>
-        </li>
-        <li>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-1 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-blue-600"
-          >
-            <FiLogOut className="w-5 h-5 text-red-600" />
-            <span className="text-red-600">Çıkış Yap</span>
-          </button>
-        </li>
-      </ul>
+    <nav className="relative flex justify-end">
+      {/* Hamburger menu for small and medium screens */}
+      <button
+        className="md:hidden p-2 text-gray-700 hover:text-blue-600 focus:outline-none"
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        {isMenuOpen ? (
+          <FiX className="w-6 h-6 " />
+        ) : (
+          <FiMenu className="w-6 h-6" />
+        )}
+      </button>
+
+      {/* Mobile menu */}
+      <div
+        className={`absolute top-full right-0 mt-2 bg-white shadow-lg rounded-lg p-4 z-50 w-64 transition-all duration-300 transform origin-top-right md:hidden ${
+          isMenuOpen
+            ? "opacity-100 visible translate-x-0"
+            : "opacity-0 invisible translate-x-5"
+        }`}
+      >
+        {navItems}
+      </div>
+
+      {/* Desktop menu */}
+      <div className="hidden md:block">{navItems}</div>
     </nav>
   );
 }

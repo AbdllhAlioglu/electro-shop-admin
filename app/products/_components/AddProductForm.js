@@ -27,8 +27,11 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
   const { mutate: addProduct, isLoading } = useAddProduct();
 
   const onSubmit = (data) => {
+    // additional_info alanını data nesnesinden çıkaralım
+    const { additional_info, ...restData } = data;
+
     const formattedData = {
-      ...data,
+      ...restData,
       features: JSON.stringify(
         data.features.split("\n").filter((feature) => feature.trim() !== "")
       ),
@@ -235,20 +238,6 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
             placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           placeholder="- Özellik 1&#10;- Özellik 2&#10;- Özellik 3"
-          disabled={isLoading}
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
-          Ek Bilgiler
-        </label>
-        <textarea
-          {...register("additional_info")}
-          rows="2"
-          className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          placeholder="Ek bilgiler..."
           disabled={isLoading}
         />
       </div>
