@@ -12,7 +12,6 @@ export function useLogin() {
       router.push("/dashboard");
     },
     onError: (error) => {
-      console.log(error);
       toast.error(error?.response?.data?.message || "Email veya şifre hatalı!");
     },
   });

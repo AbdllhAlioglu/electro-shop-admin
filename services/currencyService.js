@@ -10,7 +10,6 @@ export async function getExchangeRates(baseCurrency = "TRY") {
     }
 
     const url = `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/${baseCurrency}`;
-    console.log("Fetching exchange rates from:", url);
 
     const response = await fetch(url);
 
@@ -21,7 +20,6 @@ export async function getExchangeRates(baseCurrency = "TRY") {
     }
 
     const data = await response.json();
-    console.log("Exchange rates data:", data);
 
     if (data.result !== "success") {
       console.error("Exchange rate API returned error:", data);

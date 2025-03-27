@@ -10,6 +10,8 @@ import {
   FiPhone,
   FiMessageCircle,
   FiClock,
+  FiEye,
+  FiEyeOff,
 } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
@@ -17,14 +19,19 @@ import { useRouter } from "next/navigation";
 import PublicHeader from "./PublicHeader";
 import Footer from "./ui/Footer";
 import { useLogin } from "@/services/useLogin";
-
+import { toast } from "react-hot-toast";
 export default function PublicLanding() {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const [formData, setFormData] = useState({
-    email: "abdullahalioglu37@gmail.com",
+    email: "",
     password: "",
     rememberMe: false,
   });
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
 
   const { login, isLoading } = useLogin();
   const [isSupportActive, setIsSupportActive] = useState(false);
@@ -39,6 +46,7 @@ export default function PublicLanding() {
   const handleGoogleLogin = () => {
     // Google login işlemi buraya gelecek
     console.log("Google login clicked");
+    toast.error("Google login henüz desteklenmiyor");
   };
 
   // Destek ekibinin aktif olup olmadığını kontrol et
@@ -138,7 +146,7 @@ export default function PublicLanding() {
                         <FiLock className="h-5 w-5 text-gray-400" />
                       </div>
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         id="password"
                         value={formData.password}
                         disabled={isLoading}
@@ -149,6 +157,13 @@ export default function PublicLanding() {
                         placeholder="••••••••"
                         required
                       />
+                      <button
+                        type="button"
+                        onClick={handlePasswordToggle}
+                        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      >
+                        {showPassword ? <FiEyeOff /> : <FiEye />}
+                      </button>
                     </div>
                   </div>
 
