@@ -4,6 +4,7 @@ import LeftMenu from "./_components/LeftMenu";
 
 export default function ClientLayout({ children }) {
   const [theme, setTheme] = useState("light");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // localStorage'dan tema ayarını al
@@ -14,16 +15,54 @@ export default function ClientLayout({ children }) {
     }
   }, []);
 
+  // Menüyü kapatmak için click handler
+  const handleContentClick = () => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
     <div className="flex-1 theme-transition" data-theme={theme}>
-      <div className="flex-1 px-6 py-8 grid grid-cols-4 gap-8 overflow-hidden bg-gray-50">
-        <div className="col-span-1 bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="flex-1 px-2 sm:px-4 md:px-6 py-4 md:py-8 flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-8 overflow-hidden bg-gray-50 min-h-screen">
+        {/* Sol menü - Mobil için bottom drawer */}
+        <div
+          className={`${
+            isMobileMenuOpen
+              ? "fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity md:hidden"
+              : "hidden"
+          }`}
+          onClick={handleContentClick}
+        >
+          <div
+            className={`fixed inset-x-0 bottom-0 bg-white transform transition-transform duration-300 ease-in-out rounded-t-2xl ${
+              isMobileMenuOpen ? "translate-y-0" : "translate-y-full"
+            } md:relative md:translate-y-0`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4">
+              {/* Drawer handle */}
+              <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
+              <div className="space-y-6">
+                <LeftMenu onItemClick={handleContentClick} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Sol Menü */}
+        <div className="hidden md:block md:col-span-3 lg:col-span-2 bg-white shadow-md rounded-lg overflow-hidden">
           <div className="p-4">
             <LeftMenu />
           </div>
         </div>
-        <div className="col-span-3">
-          <main className="max-w-7xl mx-auto pr-4 h-[calc(100vh-120px)] overflow-y-auto rounded-lg bg-white shadow-md p-6">
+
+        {/* Ana içerik */}
+        <div
+          className="md:col-span-9 lg:col-span-10"
+          onClick={handleContentClick}
+        >
+          <main className="w-full mx-auto h-[calc(100vh-120px)] overflow-y-auto rounded-lg bg-white shadow-md p-3 sm:p-4 md:p-6">
             {children}
           </main>
         </div>

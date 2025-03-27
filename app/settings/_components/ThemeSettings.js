@@ -28,46 +28,52 @@ export default function ThemeSettings() {
   };
 
   return (
-    <div className="theme-card rounded-lg shadow-md p-6 max-w-2xl">
-      <h2 className="text-xl font-semibold mb-4">Tema Ayarları</h2>
-      <div className="grid grid-cols-2 gap-4">
+    <div className="theme-card rounded-lg shadow-md p-4 sm:p-6 max-w-2xl">
+      <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
+        Tema Ayarları
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {THEMES.map((theme) => {
           const Icon = theme.icon;
           return (
             <button
               key={theme.id}
               onClick={() => handleThemeChange(theme.id)}
-              className={`p-6 rounded-lg border-2 transition-all card-hover ${
+              className={`p-4 sm:p-6 rounded-lg border-2 transition-all card-hover ${
                 selectedTheme === theme.id
                   ? "border-blue-500 bg-blue-50"
                   : "border-gray-200 hover:border-blue-300"
               }`}
             >
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <div className="flex items-start sm:items-center gap-2 sm:gap-3">
                   <div
-                    className={`p-2 rounded-lg ${
+                    className={`p-1.5 sm:p-2 rounded-lg flex-shrink-0 ${
                       theme.id === "colored"
                         ? "bg-gradient-to-r from-indigo-500 to-purple-500"
                         : "bg-gray-100"
                     }`}
                   >
                     <Icon
-                      className={`w-6 h-6 ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 ${
                         theme.id === "colored" ? "text-white" : "text-gray-600"
                       }`}
                     />
                   </div>
-                  <div>
-                    <p className="font-medium">{theme.name}</p>
-                    <p className="text-sm text-gray-500">{theme.description}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm sm:text-base line-clamp-1">
+                      {theme.name}
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
+                      {theme.description}
+                    </p>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 sm:gap-2 flex-wrap">
                   {Object.values(theme.colors).map((color, index) => (
                     <div
                       key={index}
-                      className="w-6 h-6 rounded-full"
+                      className="w-4 h-4 sm:w-6 sm:h-6 rounded-full flex-shrink-0"
                       style={{ backgroundColor: color }}
                     />
                   ))}
@@ -77,8 +83,8 @@ export default function ThemeSettings() {
           );
         })}
       </div>
-      <div className="mt-6">
-        <p className="text-sm text-gray-500">
+      <div className="mt-4 sm:mt-6">
+        <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
           * Seçilen tema tüm uygulamanın görünümünü değiştirecektir.
         </p>
       </div>

@@ -10,53 +10,39 @@ import {
   FiSettings,
 } from "react-icons/fi";
 
-export default function LeftMenu() {
+export default function LeftMenu({ onItemClick }) {
+  const menuItems = [
+    { href: "/dashboard", icon: FiHome, text: "Ana Sayfa" },
+    { href: "/products", icon: FiBox, text: "Ürünler" },
+    { href: "/categories", icon: FiList, text: "Kategoriler" },
+    { href: "/orders", icon: FiShoppingCart, text: "Siparişler" },
+    { href: "/customers", icon: FiUsers, text: "Müşteriler" },
+    { href: "/statistics", icon: FiBarChart2, text: "İstatistikler" },
+    { href: "/settings", icon: FiSettings, text: "Ayarlar" },
+  ];
+
   return (
-    <nav className="flex flex-col gap-4  ">
-      <Link
-        href="/dashboard"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiHome className="w-5 h-5" /> Ana Sayfa
-      </Link>
-      <Link
-        href="/products"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiBox className="w-5 h-5" /> Ürünler
-      </Link>
-      <Link
-        href="/categories"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiList className="w-5 h-5" /> Kategoriler
-      </Link>
-      <Link
-        href="/orders"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiShoppingCart className="w-5 h-5" /> Siparişler
-      </Link>
-      <Link
-        href="/customers"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiUsers className="w-5 h-5" /> Müşteriler
-      </Link>
-
-      <Link
-        href="/statistics"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiBarChart2 className="w-5 h-5" /> İstatistikler
-      </Link>
-
-      <Link
-        href="/settings"
-        className="hover:text-primary-300 transition-all duration-300 ease-out transform hover:scale-105 px-4 py-2 hover:bg-primary-800 hover:translate-x-[10px] rounded-md flex items-center gap-2"
-      >
-        <FiSettings className="w-5 h-5" /> Ayarlar
-      </Link>
+    <nav className="flex flex-col gap-1 md:gap-2">
+      {menuItems.map((item) => {
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-all duration-200 ease-in-out"
+            onClick={() => {
+              if (onItemClick) onItemClick();
+            }}
+          >
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-100 transition-colors">
+              <Icon className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+            </div>
+            <span className="text-sm md:text-base font-medium truncate">
+              {item.text}
+            </span>
+          </Link>
+        );
+      })}
     </nav>
   );
 }
