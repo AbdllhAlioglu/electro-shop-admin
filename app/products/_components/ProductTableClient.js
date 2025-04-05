@@ -13,7 +13,8 @@ export default function ProductTableClient({
   brands,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState("name");
+  const [sortDirection, setSortDirection] = useState("asc");
   const [selectedCategory, setSelectedCategory] = useState("");
 
   // Ürünleri React Query ile getir
@@ -50,20 +51,30 @@ export default function ProductTableClient({
     }
 
     // Sıralama
-    if (sortBy) {
-      const [field, direction] = sortBy.split("-");
-      filtered.sort((a, b) => {
-        let comparison = 0;
-        if (field === "name") {
-          comparison = a.name.localeCompare(b.name);
-        } else if (field === "price") {
-          comparison = a.price - b.price;
-        } else if (field === "stock") {
-          comparison = a.stock - b.stock;
-        }
-        return direction === "asc" ? comparison : -comparison;
-      });
-    }
+    filtered.sort((a, b) => {
+      let comparison = 0;
+
+      // Sorting based on field type
+      if (sortBy === "name") {
+        comparison = (a.name || "").localeCompare(b.name || "");
+      } else if (sortBy === "price") {
+        comparison = parseFloat(a.price || 0) - parseFloat(b.price || 0);
+      } else if (sortBy === "stock") {
+        comparison = parseInt(a.stock || 0) - parseInt(b.stock || 0);
+      } else if (sortBy === "category_id") {
+        const catA =
+          categories?.find((c) => c.id === a.category_id)?.name || "";
+        const catB =
+          categories?.find((c) => c.id === b.category_id)?.name || "";
+        comparison = catA.localeCompare(catB);
+      } else if (sortBy === "brand_id") {
+        const brandA = brands?.find((b) => b.id === a.brand_id)?.name || "";
+        const brandB = brands?.find((b) => b.id === b.brand_id)?.name || "";
+        comparison = brandA.localeCompare(brandB);
+      }
+
+      return sortDirection === "asc" ? comparison : -comparison;
+    });
 
     return filtered;
   };
@@ -78,6 +89,15 @@ export default function ProductTableClient({
     );
   }
 
+  const handleSortChange = (field) => {
+    if (sortBy === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortBy(field);
+      setSortDirection("asc");
+    }
+  };
+
   return (
     <>
       <FilterBar
@@ -90,8 +110,12 @@ export default function ProductTableClient({
         categories={categories}
       />
 
-      <table className="min-w-full bg-white rounded-lg ">
-        <ProductTableHeader />
+      <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
+        <ProductTableHeader
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSortChange={handleSortChange}
+        />
         <ProductTableBody
           products={filteredProducts}
           categories={categories}

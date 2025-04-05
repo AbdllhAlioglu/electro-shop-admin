@@ -1,4 +1,4 @@
-export default function ProductTableHeader({
+export default function OrderTableHeader({
   sortBy,
   sortDirection,
   onSortChange,
@@ -14,41 +14,49 @@ export default function ProductTableHeader({
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("name")}
+            onClick={() => onSortChange("id")}
           >
-            Ürün Adı{getSortIcon("name")}
+            Sipariş No{getSortIcon("id")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("price")}
+            onClick={() => onSortChange("customer")}
           >
-            Fiyat{getSortIcon("price")}
+            Müşteri{getSortIcon("customer")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("stock")}
+            onClick={() => onSortChange("phone")}
           >
-            Stok{getSortIcon("stock")}
+            Telefon{getSortIcon("phone")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("category_id")}
+            onClick={() => onSortChange("created_at")}
           >
-            Kategori{getSortIcon("category_id")}
+            Tarih{getSortIcon("created_at")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("brand_id")}
+            onClick={() => onSortChange("discounted_total")}
           >
-            Marka{getSortIcon("brand_id")}
+            Tutar{getSortIcon("discounted_total")}
+          </button>
+        </th>
+        <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
+          <button
+            className="font-semibold focus:outline-none text-white"
+            onClick={() => onSortChange("priority")}
+          >
+            Teslimat{getSortIcon("priority")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">

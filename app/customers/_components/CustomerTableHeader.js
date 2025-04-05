@@ -1,4 +1,4 @@
-export default function ProductTableHeader({
+export default function CustomerTableHeader({
   sortBy,
   sortDirection,
   onSortChange,
@@ -14,41 +14,49 @@ export default function ProductTableHeader({
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
+            onClick={() => onSortChange("id")}
+          >
+            ID{getSortIcon("id")}
+          </button>
+        </th>
+        <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
+          <button
+            className="font-semibold focus:outline-none text-white"
             onClick={() => onSortChange("name")}
           >
-            Ürün Adı{getSortIcon("name")}
+            Müşteri Adı{getSortIcon("name")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("price")}
+            onClick={() => onSortChange("email")}
           >
-            Fiyat{getSortIcon("price")}
+            E-posta{getSortIcon("email")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("stock")}
+            onClick={() => onSortChange("phone")}
           >
-            Stok{getSortIcon("stock")}
+            Telefon{getSortIcon("phone")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("category_id")}
+            onClick={() => onSortChange("created_at")}
           >
-            Kategori{getSortIcon("category_id")}
+            Kayıt Tarihi{getSortIcon("created_at")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button
             className="font-semibold focus:outline-none text-white"
-            onClick={() => onSortChange("brand_id")}
+            onClick={() => onSortChange("total_orders")}
           >
-            Marka{getSortIcon("brand_id")}
+            Toplam Sipariş{getSortIcon("total_orders")}
           </button>
         </th>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
