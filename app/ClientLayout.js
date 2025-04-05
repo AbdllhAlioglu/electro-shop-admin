@@ -23,8 +23,11 @@ export default function ClientLayout({ children }) {
   };
 
   return (
-    <div className="flex-1 theme-transition" data-theme={theme}>
-      <div className="flex-1 px-2 sm:px-4 md:px-6 py-4 md:py-8 flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-8 overflow-hidden bg-gray-50 min-h-screen">
+    <div
+      className="flex-1 theme-transition h-screen overflow-hidden"
+      data-theme={theme}
+    >
+      <div className="flex-1 px-2 sm:px-4 md:px-6 py-4 md:py-8 flex flex-col md:grid md:grid-cols-12 gap-4 md:gap-6 lg:gap-8 h-full overflow-hidden bg-gray-50">
         {/* Sol menü - Mobil için bottom drawer */}
         <div
           className={`${
@@ -51,7 +54,7 @@ export default function ClientLayout({ children }) {
         </div>
 
         {/* Desktop Sol Menü */}
-        <div className="hidden md:block md:col-span-3 lg:col-span-2 bg-white shadow-md rounded-lg overflow-hidden">
+        <div className="hidden md:block md:col-span-3 lg:col-span-2 bg-white shadow-md rounded-lg overflow-y-auto h-full">
           <div className="p-4">
             <LeftMenu />
           </div>
@@ -59,10 +62,10 @@ export default function ClientLayout({ children }) {
 
         {/* Ana içerik */}
         <div
-          className="md:col-span-9 lg:col-span-10"
+          className="md:col-span-9 lg:col-span-10 h-full flex flex-col overflow-y-auto"
           onClick={handleContentClick}
         >
-          <main className="w-full mx-auto h-[calc(100vh-120px)] overflow-y-auto rounded-lg bg-white shadow-md p-3 sm:p-4 md:p-6">
+          <main className="w-full mx-auto flex-1 overflow-y-auto rounded-lg bg-white shadow-md p-3 sm:p-4 md:p-6">
             {children}
           </main>
         </div>
