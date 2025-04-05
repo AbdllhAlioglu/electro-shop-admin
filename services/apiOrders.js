@@ -92,3 +92,87 @@ export async function deleteOrder(id) {
 
   return true;
 }
+
+// Get recent sales data
+export async function getRecentSales() {
+  // Join orders with order_items to get complete sales data
+  const { data, error } = await supabase
+    .from("orders")
+    .select(
+      `
+      id, 
+      created_at, 
+      updated_at, 
+      user_id, 
+      discount_percentage, 
+      discounted_total,
+      order_items (
+        id, 
+        created_at, 
+        unit_price, 
+        total_price, 
+        product_name, 
+        product_image
+      )
+    `
+    )
+    .order("created_at", { ascending: false })
+    .limit(10); // Get last 10 sales
+
+  if (error) {
+    console.error("Error fetching recent sales:", error);
+    throw error;
+  }
+
+  return data;
+}
+
+// Get sales trends data
+export async function getSalesTrendsData() {
+  // Calculate sales by month for the last 6 months
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+  const isoDate = sixMonthsAgo.toISOString();
+
+  const { data, error } = await supabase
+    .from("orders")
+    .select(
+      `
+      id, 
+      created_at, 
+      discounted_total
+    `
+    )
+    .gte("created_at", isoDate)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching sales trends data:", error);
+    throw error;
+  }
+
+  // Group data by month
+  const salesByMonth = {};
+  data.forEach((order) => {
+    const date = new Date(order.created_at);
+    const monthYear = date.toLocaleString("tr-TR", {
+      month: "short",
+      year: "numeric",
+    });
+
+    if (!salesByMonth[monthYear]) {
+      salesByMonth[monthYear] = 0;
+    }
+
+    salesByMonth[monthYear] += parseFloat(order.discounted_total);
+  });
+
+  // Convert to array format for charts
+  const trendsData = Object.entries(salesByMonth).map(([name, amount]) => ({
+    name,
+    amount: Number(amount.toFixed(2)),
+  }));
+
+  return trendsData;
+}

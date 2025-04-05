@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useProducts } from "@/app/_hooks/useProducts";
 import { useCategories } from "@/app/_hooks/useCategories";
+import { useRecentSales, useSalesTrends } from "@/app/_hooks/useOrders";
 import {
   FiPackage,
   FiShoppingCart,
@@ -40,6 +41,9 @@ const COLORS = [
 const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
   const { data: products = initialProducts } = useProducts();
   const { data: categories = initialCategories } = useCategories();
+  const { data: recentSales = [] } = useRecentSales();
+  const { data: salesTrendsData = [] } = useSalesTrends();
+
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalCategories: 0,
@@ -47,7 +51,7 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
     recentSales: 0,
   });
   const [recentTrend, setRecentTrend] = useState({
-    salesTrend: 5.2,
+    salesTrend: 0,
     productTrend: 12.3,
   });
   const [topCategories, setTopCategories] = useState([]);
@@ -59,7 +63,7 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
       prepareStats();
       prepareChartData();
     }
-  }, [products, categories]);
+  }, [products, categories, recentSales, salesTrendsData]);
 
   const prepareStats = () => {
     // Temel istatistikler
@@ -67,11 +71,30 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
       (product) => (Number(product.stock) || 0) <= 5
     ).length;
 
+    // Calculate total sales from recentSales data
+    const totalRecentSales = recentSales.length;
+
+    // Calculate sales trend
+    let salesTrendPercentage = 0;
+    if (salesTrendsData.length >= 2) {
+      const currentMonth = salesTrendsData[salesTrendsData.length - 1].amount;
+      const prevMonth = salesTrendsData[salesTrendsData.length - 2].amount;
+
+      if (prevMonth > 0) {
+        salesTrendPercentage = ((currentMonth - prevMonth) / prevMonth) * 100;
+      }
+    }
+
     setStats({
       totalProducts: products.length,
       totalCategories: categories.length,
       lowStockProducts: lowStock,
-      recentSales: Math.floor(Math.random() * 50) + 20, // Örnek veri
+      recentSales: totalRecentSales,
+    });
+
+    setRecentTrend({
+      salesTrend: Number(salesTrendPercentage.toFixed(1)),
+      productTrend: 12.3, // Örnek veri
     });
   };
 
@@ -123,21 +146,8 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
 
     setStockData(stockLevels);
 
-    // Örnek satış verileri (gerçek verileri API'den alabilirsiniz)
-    const lastSixMonths = [];
-    const currentDate = new Date();
-
-    for (let i = 5; i >= 0; i--) {
-      const month = new Date(currentDate);
-      month.setMonth(currentDate.getMonth() - i);
-
-      lastSixMonths.push({
-        name: month.toLocaleString("tr-TR", { month: "short" }),
-        amount: Math.floor(Math.random() * 10000) + 5000, // Örnek veri
-      });
-    }
-
-    setSalesData(lastSixMonths);
+    // Use real sales data from API
+    setSalesData(salesTrendsData);
   };
 
   // İlk yükleme için initial data kullan
@@ -202,9 +212,7 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
         <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm text-gray-500 font-medium">
-                Son Satışlar <i>(Test)</i>
-              </p>
+              <p className="text-sm text-gray-500 font-medium">Son Satışlar</p>
               <h3 className="text-2xl font-bold mt-1">{stats.recentSales}</h3>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">
@@ -212,11 +220,22 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
-            <FiChevronUp className="text-green-500 mr-1" />
-            <span className="text-green-500 font-medium">
-              {recentTrend.salesTrend}%
-            </span>
-            <span className="text-gray-500 ml-2">son haftadan</span>
+            {recentTrend.salesTrend > 0 ? (
+              <>
+                <FiChevronUp className="text-green-500 mr-1" />
+                <span className="text-green-500 font-medium">
+                  {recentTrend.salesTrend}%
+                </span>
+              </>
+            ) : (
+              <>
+                <FiChevronDown className="text-red-500 mr-1" />
+                <span className="text-red-500 font-medium">
+                  {Math.abs(recentTrend.salesTrend)}%
+                </span>
+              </>
+            )}
+            <span className="text-gray-500 ml-2">son aydan</span>
           </div>
         </div>
 
@@ -245,9 +264,7 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Satış Trendleri */}
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-medium mb-4">
-            Satış Trendleri <i>(Test)</i>
-          </h2>
+          <h2 className="text-lg font-medium mb-4">Satış Trendleri</h2>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart
               data={salesData}

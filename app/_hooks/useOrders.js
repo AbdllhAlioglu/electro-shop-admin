@@ -7,6 +7,8 @@ import {
   updateOrder,
   deleteOrder,
   getOrderItemsByOrderId,
+  getRecentSales,
+  getSalesTrendsData,
 } from "@/services/apiOrders";
 import toast from "react-hot-toast";
 import { createNotification } from "@/services/apiNotifications";
@@ -145,5 +147,21 @@ export function useDeleteOrder() {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
+  });
+}
+
+// Hook to get recent sales
+export function useRecentSales() {
+  return useQuery({
+    queryKey: ["recentSales"],
+    queryFn: getRecentSales,
+  });
+}
+
+// Hook to get sales trends data
+export function useSalesTrends() {
+  return useQuery({
+    queryKey: ["salesTrends"],
+    queryFn: getSalesTrendsData,
   });
 }
