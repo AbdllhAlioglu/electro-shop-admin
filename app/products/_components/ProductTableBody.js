@@ -8,7 +8,7 @@ export default function ProductTableBody({
   exchangeRates,
 }) {
   return (
-    <tbody className="divide-y divide-gray-200">
+    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
       {products?.length === 0 ? (
         <EmptyRow />
       ) : (

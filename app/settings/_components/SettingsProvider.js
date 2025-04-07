@@ -2,20 +2,21 @@
 import { useEffect } from "react";
 import { FONT_SIZES } from "./constants";
 
-// This component is responsible for initializing settings on the client side
-// without affecting the UI directly
+// Bu bileşen, tema ve font boyutu gibi ayarları sayfa yüklendiğinde uygular
 export default function SettingsProvider() {
   useEffect(() => {
-    // Initialize settings from localStorage
+    // Tema ayarını al ve uygula
     const savedTheme = localStorage.getItem("selectedTheme");
     const savedFontSize = localStorage.getItem("selectedFontSize");
 
-    // Apply theme
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
+    // Dark mode için
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
 
-    // Apply font size
+    // Font boyutu için
     if (savedFontSize) {
       const fontSize = FONT_SIZES.find((f) => f.id === savedFontSize)?.scale;
       if (fontSize) {
@@ -24,6 +25,6 @@ export default function SettingsProvider() {
     }
   }, []);
 
-  // This component doesn't render anything
+  // Bu bileşen hiçbir şey render etmiyor
   return null;
 }

@@ -58,14 +58,14 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
+        <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
           Ürün Adı
         </label>
         <input
           {...register("name", { required: "Ürün adı gerekli" })}
           type="text"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder-primary-400 focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           placeholder="Ürün adını giriniz"
           autoComplete="false"
           maxLength={200}
@@ -79,14 +79,14 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
+        <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
           Açıklama {countLength}/{maxLength}
         </label>
         <textarea
           {...register("description")}
           rows="3"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder-primary-400 focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           placeholder="Ürünün açıklamasını giriniz..."
           onChange={handleChange}
           maxLength={maxLength}
@@ -96,7 +96,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-primary-200 mb-1">
+          <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
             Fiyat
           </label>
           <input
@@ -107,7 +107,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
             type="number"
             step="0.01"
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-              placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder-primary-400 focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
             placeholder="00,00 ₺"
             min={0}
             max={100000}
@@ -122,7 +122,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-primary-200 mb-1">
+          <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
             Stok
           </label>
           <input
@@ -132,7 +132,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
             })}
             type="number"
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-              placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder-primary-400 focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
             placeholder="0"
             min={0}
             max={1000}
@@ -148,13 +148,13 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-primary-200 mb-1">
+          <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
             Marka
           </label>
           <select
             {...register("brand_id", { required: "Marka seçimi gerekli" })}
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
             disabled={isLoading}
           >
             <option value="">Marka Seçin</option>
@@ -172,7 +172,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-primary-200 mb-1">
+          <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
             Kategori
           </label>
           <select
@@ -180,7 +180,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
               required: "Kategori seçimi gerekli",
             })}
             className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
             disabled={isLoading}
           >
             <option value="">Kategori Seçin</option>
@@ -199,7 +199,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
+        <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
           Güç
         </label>
         <input
@@ -209,7 +209,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
           })}
           type="number"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder-primary-400 focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           placeholder="0"
           min={0}
           max={1000}
@@ -229,14 +229,14 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
+        <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100 ">
           Özellikler (Her satıra bir özellik yazın)
         </label>
         <textarea
           {...register("features")}
           rows="4"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder-primary-400 focus:outline-none dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           placeholder="- Özellik 1&#10;- Özellik 2&#10;- Özellik 3"
           disabled={isLoading}
         />
@@ -246,7 +246,7 @@ export default function AddProductForm({ onProductAdded, categories, brands }) {
         <button
           type="submit"
           className="inline-flex items-center justify-center bg-blue-600 text-white py-2 px-6 rounded-md 
-            hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm"
+              hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm"
           disabled={isLoading}
         >
           {isLoading ? "Ekleniyor..." : "Ekle"}

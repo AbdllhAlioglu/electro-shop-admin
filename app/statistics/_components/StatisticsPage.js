@@ -162,8 +162,8 @@ export default function StatisticsPage({
         <button
           className={`px-4 py-2 font-medium ${
             activeTab === "products"
-              ? "border-b-2 border-blue-500 text-blue-600"
-              : "text-gray-500 hover:text-gray-700"
+              ? "border-b-2 border-blue-500 dark:text-stale-200 dark:hover:text-stale-400"
+              : "text-gray-500 hover:text-gray-700 dark:text-stale-200 dark:hover:text-stale-400"
           }`}
           onClick={() => setActiveTab("products")}
         >
@@ -172,8 +172,8 @@ export default function StatisticsPage({
         <button
           className={`px-4 py-2 font-medium ${
             activeTab === "categories"
-              ? "border-b-2 border-blue-500 text-blue-600"
-              : "text-gray-500 hover:text-gray-700"
+              ? "border-b-2 border-blue-500 dark:text-stale-200 dark:hover:text-stale-400"
+              : "text-gray-500 hover:text-gray-700 dark:text-stale-200 dark:hover:text-stale-400"
           }`}
           onClick={() => setActiveTab("categories")}
         >
@@ -182,14 +182,16 @@ export default function StatisticsPage({
       </div>
 
       {/* Charts */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
+      <div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700">
         {activeTab === "products" ? (
           <div>
-            <h2 className="text-xl font-semibold mb-4">Ürün Dağılımı</h2>
+            <h2 className="text-xl font-semibold mb-4 dark:text-slate-100">
+              Ürün Dağılımı
+            </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {/* Bar Chart */}
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-medium mb-4">
+              <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-600">
+                <h3 className="text-lg font-medium mb-4 dark:text-slate-100">
                   Kategori Bazında Ürün Sayıları
                 </h3>
                 <ResponsiveContainer width="100%" height={chartHeight}>
@@ -218,7 +220,7 @@ export default function StatisticsPage({
               </div>
 
               {/* Pie Chart */}
-              <div className="bg-gray-50 p-2 rounded-lg text-[0.8rem]">
+              <div className="bg-gray-50 p-2 rounded-lg text-[0.8rem] dark:bg-gray-600">
                 <h3 className="text-lg font-medium mb-4">Stok Durumu</h3>
                 <ResponsiveContainer width="100%" height={chartHeight}>
                   <PieChart>
@@ -255,8 +257,8 @@ export default function StatisticsPage({
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {/* Bar Chart for Price Ranges */}
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="text-lg font-medium mb-4">
+              <div className="bg-gray-50 p-4 rounded-lg dark:bg-gray-600 dark:text-slate-100">
+                <h3 className="text-lg font-medium mb-4 dark:text-slate-100">
                   Fiyat Aralıklarına Göre Ürünler
                 </h3>
                 <ResponsiveContainer width="100%" height={chartHeight}>

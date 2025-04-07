@@ -12,7 +12,7 @@ export default function CustomerTableBody({ customers }) {
   }
 
   return (
-    <tbody>
+    <tbody className="divide-y   dark:divide-gray-700">
       {customers.map((customer) => (
         <CustomerTableRow key={customer.id} customer={customer} />
       ))}

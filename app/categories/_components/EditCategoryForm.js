@@ -40,21 +40,21 @@ export default function EditCategoryForm({ category, categories, onClose }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700 dark:text-slate-100">
           Kategori Adı
         </label>
         <input
           type="text"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600  "
           required
           disabled={isLoading}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="block text-sm font-medium text-gray-700 dark:text-slate-100">
           Üst Kategori
         </label>
         <select
@@ -62,7 +62,7 @@ export default function EditCategoryForm({ category, categories, onClose }) {
           onChange={(e) =>
             setFormData({ ...formData, parent_id: e.target.value || null })
           }
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600  "
           disabled={isLoading}
         >
           <option value="">Üst Kategori Yok</option>

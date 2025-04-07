@@ -169,92 +169,112 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
       {/* İstatistik Kartları başlangıç */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Toplam Ürün */}
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500 dark:bg-gray-700">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm text-gray-500 font-medium">Toplam Ürün</p>
-              <h3 className="text-2xl font-bold mt-1">{stats.totalProducts}</h3>
+              <p className="text-sm text-gray-500 font-medium dark:text-slate-100">
+                Toplam Ürün
+              </p>
+              <h3 className="text-2xl font-bold mt-1 dark:text-slate-100">
+                {stats.totalProducts}
+              </h3>
             </div>
-            <div className="p-3 bg-blue-100 rounded-lg">
-              <FiPackage className="w-6 h-6 text-blue-500" />
+            <div className="p-3 bg-blue-100 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700">
+              <FiPackage className="w-6 h-6 text-blue-500 dark:text-slate-100" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
             <FiChevronUp className="text-green-500 mr-1" />
-            <span className="text-green-500 font-medium">
+            <span className="text-green-500 font-medium dark:text-slate-100 ">
               {recentTrend.productTrend}%
             </span>
-            <span className="text-gray-500 ml-2">son 30 günden</span>
+            <span className="text-gray-500 ml-2 dark:text-slate-100">
+              son 30 günden
+            </span>
           </div>
         </div>
 
         {/* Toplam Kategori */}
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500">
-          <div className="flex justify-between items-start">
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-purple-500 dark:bg-gray-700">
+          <div className="flex justify-between items-start ">
             <div>
-              <p className="text-sm text-gray-500 font-medium">
+              <p className="text-sm text-gray-500 font-medium dark:text-slate-100">
                 Toplam Kategori
               </p>
-              <h3 className="text-2xl font-bold mt-1">
+              <h3 className="text-2xl font-bold mt-1 dark:text-slate-100">
                 {stats.totalCategories}
               </h3>
             </div>
-            <div className="p-3 bg-purple-100 rounded-lg">
-              <FiGrid className="w-6 h-6 text-purple-500" />
+            <div className="p-3 bg-purple-100 rounded-lg dark:bg-purple-600 dark:hover:bg-purple-700">
+              <FiGrid className="w-6 h-6 text-purple-500 dark:text-slate-100" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
-            <span className="text-gray-500">Aktif kategoriler</span>
+            <span className="text-gray-500 dark:text-slate-100">
+              Aktif kategoriler
+            </span>
           </div>
         </div>
 
         {/* Son Satışlar */}
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500 dark:bg-gray-700  ">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm text-gray-500 font-medium">Son Satışlar</p>
-              <h3 className="text-2xl font-bold mt-1">{stats.recentSales}</h3>
+              <p className="text-sm text-gray-500 font-medium dark:text-slate-100">
+                Son Satışlar
+              </p>
+              <h3 className="text-2xl font-bold mt-1 dark:text-slate-100">
+                {stats.recentSales}
+              </h3>
             </div>
-            <div className="p-3 bg-green-100 rounded-lg">
-              <FiShoppingCart className="w-6 h-6 text-green-500" />
+            <div className="p-3 bg-green-100 rounded-lg dark:bg-green-600 dark:hover:bg-green-700">
+              <FiShoppingCart className="w-6 h-6 text-green-500 dark:text-slate-100" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
             {recentTrend.salesTrend > 0 ? (
               <>
                 <FiChevronUp className="text-green-500 mr-1" />
-                <span className="text-green-500 font-medium">
+                <span className="text-green-500 font-medium dark:text-slate-100   ">
                   {recentTrend.salesTrend}%
                 </span>
               </>
             ) : (
               <>
                 <FiChevronDown className="text-red-500 mr-1" />
-                <span className="text-red-500 font-medium">
+                <span className="text-red-500 font-medium dark:text-slate-100">
                   {Math.abs(recentTrend.salesTrend)}%
                 </span>
               </>
             )}
-            <span className="text-gray-500 ml-2">son aydan</span>
+            <span className="text-gray-500 ml-2 dark:text-slate-100">
+              son aydan
+            </span>
           </div>
         </div>
 
         {/* Düşük Stok Uyarısı */}
-        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500 dark:bg-gray-700">
           <div className="flex justify-between items-start">
             <div>
-              <p className="text-sm text-gray-500 font-medium">Düşük Stok</p>
-              <h3 className="text-2xl font-bold mt-1">
+              <p className="text-sm text-gray-500 font-medium dark:text-slate-100">
+                Düşük Stok
+              </p>
+              <h3 className="text-2xl font-bold mt-1 dark:text-slate-100">
                 {stats.lowStockProducts}
               </h3>
             </div>
-            <div className="p-3 bg-red-100 rounded-lg">
-              <FiAlertCircle className="w-6 h-6 text-red-500" />
+            <div className="p-3 bg-red-100 rounded-lg dark:bg-red-600 dark:hover:bg-red-700">
+              <FiAlertCircle className="w-6 h-6 text-red-500 dark:text-slate-100" />
             </div>
           </div>
           <div className="flex items-center mt-4 text-sm">
-            <span className="text-red-500 font-medium">Kritik seviyede</span>
-            <span className="text-gray-500 ml-2">ürün stokta</span>
+            <span className="text-red-500 font-medium dark:text-slate-100">
+              Kritik seviyede
+            </span>
+            <span className="text-gray-500 ml-2 dark:text-slate-100">
+              ürün stokta
+            </span>
           </div>
         </div>
       </div>
@@ -263,8 +283,10 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
       {/* Grafikler başlangıç */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Satış Trendleri */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-medium mb-4">Satış Trendleri</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700">
+          <h2 className="text-lg font-medium mb-4 dark:text-slate-100">
+            Satış Trendleri
+          </h2>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart
               data={salesData}
@@ -289,8 +311,10 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
         </div>
 
         {/* Kategori Dağılımı */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-medium mb-4">Kategori Dağılımı</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700">
+          <h2 className="text-lg font-medium mb-4 dark:text-slate-100">
+            Kategori Dağılımı
+          </h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart
               data={topCategories}
@@ -312,8 +336,10 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
         </div>
 
         {/* Stok Durumu */}
-        <div className="bg-white p-3 rounded-lg shadow-md text-sm">
-          <h2 className="text-lg font-medium mb-4">Stok Durumu</h2>
+        <div className="bg-white p-3 rounded-lg shadow-md text-sm dark:bg-gray-700">
+          <h2 className="text-lg font-medium mb-4 dark:text-slate-100">
+            Stok Durumu
+          </h2>
           <div className="flex justify-center">
             <div style={{ width: "100%", height: 300 }}>
               <ResponsiveContainer>
@@ -351,29 +377,29 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
         </div>
 
         {/* Ürün Listesi - En Popüler */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-medium mb-4">
+        <div className="bg-white p-6 rounded-lg shadow-md dark:bg-gray-700">
+          <h2 className="text-lg font-medium mb-4 dark:text-slate-100">
             En Popüler Ürünler <i>(Test)</i>
           </h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:bg-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-slate-100">
                     Ürün Adı
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-slate-100">
                     Kategori
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-slate-100">
                     Stok
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-slate-100">
                     Fiyat
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-700">
                 {products.slice(0, 5).map((product) => {
                   const category = categories.find(
                     (c) => c.id === product.category_id
@@ -381,12 +407,12 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
                   return (
                     <tr key={product.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-slate-100">
                           {product.name}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-slate-100">
                           {category?.name || "Kategorisiz"}
                         </div>
                       </td>
@@ -403,7 +429,7 @@ const DashboardClient = ({ initialProducts = [], initialCategories = [] }) => {
                           {product.stock}
                         </span>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-slate-100  ">
                         {product.price + " " + (product.currency || "TL")}
                       </td>
                     </tr>

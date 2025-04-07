@@ -9,8 +9,8 @@ export default function NotificationFilters({ filterType, onFilterChange }) {
         onClick={() => onFilterChange("all")}
         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
           filterType === "all"
-            ? "bg-gray-800 text-white"
-            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            ? "bg-gray-800 text-white dark:bg-gray-900 dark:text-slate-100"
+            : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-slate-100 dark:hover:bg-gray-600"
         }`}
       >
         Tümü
@@ -19,8 +19,8 @@ export default function NotificationFilters({ filterType, onFilterChange }) {
         onClick={() => onFilterChange("create")}
         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
           filterType === "create"
-            ? "bg-green-600 text-white"
-            : "bg-green-50 text-green-700 hover:bg-green-100"
+            ? "bg-green-600 text-white dark:bg-green-800 dark:text-white"
+            : "bg-green-50 text-green-700 hover:bg-green-100 dark:bg-gray-700 dark:text-slate-100 dark:hover:bg-gray-600"
         }`}
       >
         <span className="flex items-center gap-1">
@@ -32,8 +32,8 @@ export default function NotificationFilters({ filterType, onFilterChange }) {
         onClick={() => onFilterChange("update")}
         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
           filterType === "update"
-            ? "bg-blue-600 text-white"
-            : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+            ? "bg-blue-600 text-white dark:bg-blue-800 dark:text-white"
+            : "bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-gray-700 dark:text-slate-100 dark:hover:bg-gray-600"
         }`}
       >
         <span className="flex items-center gap-1">
@@ -45,8 +45,8 @@ export default function NotificationFilters({ filterType, onFilterChange }) {
         onClick={() => onFilterChange("delete")}
         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
           filterType === "delete"
-            ? "bg-red-600 text-white"
-            : "bg-red-50 text-red-700 hover:bg-red-100"
+            ? "bg-red-600 text-white dark:bg-red-800 dark:text-white"
+            : "bg-red-50 text-red-700 hover:bg-red-100 dark:bg-gray-700 dark:text-slate-100 dark:hover:bg-gray-600"
         }`}
       >
         <span className="flex items-center gap-1">

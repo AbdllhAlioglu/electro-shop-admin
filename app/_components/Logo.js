@@ -16,7 +16,7 @@ export default function Logo() {
         unoptimized
         className="object-contain"
       />
-      <span className="text-xl font-semibold text-primary-100">
+      <span className="text-xl font-semibold text-primary-100 dark:text-gray-500">
         Electro Shop Admin
       </span>
     </Link>

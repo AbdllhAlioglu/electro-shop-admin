@@ -12,7 +12,7 @@ export default function FilterBar({
   categories,
 }) {
   return (
-    <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+    <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-3 dark:bg-gray-800">
       {/* Arama */}
       <div>
         <input
@@ -20,7 +20,7 @@ export default function FilterBar({
           placeholder="Ürün ara..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 dark:bg-gray-700 dark:text-slate-100  border-gray-300 dark:border-gray-700"
         />
       </div>
 
@@ -29,7 +29,7 @@ export default function FilterBar({
         <select
           value={selectedCategory}
           onChange={(e) => onCategoryChange(e.target.value)}
-          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none  dark:bg-gray-700 dark:text-slate-100  border-gray-300 dark:border-gray-700"
         >
           <option value="">Tüm Kategoriler</option>
           {categories?.map((category) => (
@@ -45,7 +45,7 @@ export default function FilterBar({
         <select
           value={sortBy}
           onChange={(e) => onSortChange(e.target.value)}
-          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-gray-700 dark:text-slate-100  border-gray-300 dark:border-gray-700"
         >
           <option value="">Sıralama</option>
           <option value="name-asc">İsim (A-Z)</option>

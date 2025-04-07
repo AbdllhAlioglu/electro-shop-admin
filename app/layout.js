@@ -29,6 +29,26 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={josefin.variable}>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                // localStorage'dan tema ayarını oku
+                const savedTheme = localStorage.getItem("selectedTheme");
+                // Eğer dark mod seçiliyse hemen uygula
+                if (savedTheme === "dark") {
+                  document.documentElement.classList.add("dark");
+                } else {
+                  document.documentElement.classList.remove("dark");
+                }
+              } catch (e) {
+                console.error("Tema yüklenirken hata:", e);
+              }
+            })();
+          `,
+        }}
+      />
       <body className="min-h-screen bg-gray-50">
         <Providers>
           <AuthProvider>

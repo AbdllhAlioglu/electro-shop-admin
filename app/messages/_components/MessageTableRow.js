@@ -74,25 +74,25 @@ export default function MessageTableRow({ message }) {
 
   return (
     <>
-      <tr className="hover:bg-gray-50 transition-colors duration-200">
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+      <tr className="hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-600 dark:hover:bg-gray-700">
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium dark:text-slate-100">
           {message.sender}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {message.subject}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {formattedDate}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm">
           {isReadMessage ? (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-              <FiCheckCircle className="mr-1" />
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+              <FiCheckCircle className="mr-1 text-green-800 dark:text-green-200" />
               Okundu
             </span>
           ) : (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-              <FiMail className="mr-1" />
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+              <FiMail className="mr-1 text-blue-800 dark:text-blue-200" />
               Okunmadı
             </span>
           )}

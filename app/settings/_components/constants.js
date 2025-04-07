@@ -13,22 +13,12 @@ export const THEMES = [
     name: "Açık Tema",
     icon: FiSun,
     description: "Klasik, temiz ve profesyonel görünüm",
-    colors: {
-      primary: "#f8fafc",
-      secondary: "#1e293b",
-      accent: "#3b82f6",
-    },
   },
   {
-    id: "colored",
-    name: "Renkli Tema",
-    icon: FiDroplet,
-    description: "Modern ve canlı gradyan tasarım",
-    colors: {
-      primary: "#4f46e5",
-      secondary: "#7c3aed",
-      accent: "#6366f1",
-    },
+    id: "dark",
+    name: "Koyu Mod",
+    icon: FiMoon,
+    description: "Göz yorgunluğunu azaltan koyu tema",
   },
 ];
 

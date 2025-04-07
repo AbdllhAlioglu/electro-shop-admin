@@ -10,10 +10,10 @@ export default function NotificationGroup({
 }) {
   return (
     <div className="space-y-2">
-      <h2 className="text-lg font-semibold text-gray-700 flex items-center gap-2 mb-3">
-        <FiCalendar className="w-4 h-4" />
+      <h2 className="text-lg font-semibold text-gray-700 flex items-center gap-2 mb-3 dark:text-slate-100">
+        <FiCalendar className="w-4 h-4 dark:text-slate-100" />
         {dateLabel}
-        <span className="text-sm font-normal text-gray-500">
+        <span className="text-sm font-normal text-gray-500 dark:text-slate-100">
           ({notifications.length} bildirim)
         </span>
       </h2>

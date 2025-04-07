@@ -44,17 +44,17 @@ export default function CategoryTableRow({ category, parentName, categories }) {
 
   return (
     <>
-      <tr className="hover:bg-gray-50 transition-colors duration-200">
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+      <tr className="hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium dark:text-slate-100  ">
           {category.name}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           {parentName}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           {new Date(category.created_at).toLocaleDateString("tr-TR")}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm">
+        <td className="px-6 py-4 whitespace-nowrap text-sm ">
           <div className="flex gap-2">
             <IconButton
               icon={FiEdit2}
@@ -77,7 +77,7 @@ export default function CategoryTableRow({ category, parentName, categories }) {
 
       {isEditModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
+          <div className="bg-white p-6 rounded-lg w-full max-w-md dark:bg-gray-700">
             <h2 className="text-xl font-semibold mb-4">Kategori Düzenle</h2>
             <EditCategoryForm
               category={category}

@@ -19,11 +19,6 @@ export default function CurrencySettings() {
       setSelectedCurrency(currency);
       localStorage.setItem("selectedCurrency", currency);
       toast.success(`Para birimi ${currency} olarak güncellendi!`);
-
-      // Force a refresh of the page to ensure all components update
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000); // Short delay to allow the toast to be seen
     } catch (error) {
       toast.error("Para birimi güncellenirken bir hata oluştu!");
       console.error("Para birimi güncellenirken hata:", error);
@@ -31,23 +26,25 @@ export default function CurrencySettings() {
   };
 
   return (
-    <div className="theme-card rounded-lg shadow-md p-6 max-w-2xl">
+    <div className="card p-6 max-w-2xl">
       <h2 className="text-xl font-semibold mb-4">Para Birimi Ayarları</h2>
       <div className="grid grid-cols-2 gap-4">
         {CURRENCIES.map((currency) => (
           <button
             key={currency.code}
             onClick={() => handleCurrencyChange(currency.code)}
-            className={`p-4 rounded-lg border-2 transition-all ${
+            className={`p-4 rounded-lg border-2 ${
               selectedCurrency === currency.code
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200 hover:border-blue-300"
+                ? "border-blue-500 bg-blue-50 dark:bg-blue-900 dark:border-blue-400"
+                : "border-gray-200 hover:border-blue-300 dark:border-gray-700 dark:hover:border-blue-400"
             }`}
           >
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">{currency.name}</p>
-                <p className="text-sm text-gray-500">{currency.code}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {currency.code}
+                </p>
               </div>
               <span className="text-2xl">{currency.symbol}</span>
             </div>
@@ -55,7 +52,7 @@ export default function CurrencySettings() {
         ))}
       </div>
       <div className="mt-6">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           * Seçilen para birimi tüm ürün fiyatlarının gösterimini
           etkileyecektir. Fiyatlar güncel döviz kuruna göre otomatik olarak
           dönüştürülecektir.

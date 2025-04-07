@@ -2,110 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tema Değişkenleri */
-:root[data-theme="light"] {
-  --bg-color: #f8fafc;
-  --text-color: #1e293b;
-  --card-bg: #ffffff;
-  --border-color: #e2e8f0;
-  --header-bg: #ffffff;
-  --sidebar-bg: #ffffff;
-  --hover-color: #f1f5f9;
-  --accent-color: #3b82f6;
-  --accent-hover: #2563eb;
-  --muted-text: #64748b;
+/* Dark mode geçişi için varsayılan stiller */
+@layer base {
+  /* Light mode (varsayılan) */
+  body {
+    @apply bg-white text-gray-800;
+  }
+
+  /* Dark mode */
+  .dark body {
+    @apply bg-gray-900 text-slate-100;
+  }
 }
 
-:root[data-theme="colored"] {
-  --bg-color: #eef2ff;
-  --text-color: #1e1b4b;
-  --card-bg: #ffffff;
-  --border-color: #c7d2fe;
-  --header-bg: #312e81;
-  --sidebar-bg: #ffffff;
-  --hover-color: #e0e7ff;
-  --accent-color: #4f46e5;
-  --accent-hover: #4338ca;
-  --muted-text: #6366f1;
-
-  /* Özel Renkli Tema Stilleri */
-  --gradient-start: #4f46e5;
-  --gradient-end: #7c3aed;
-  --shadow-color: rgba(79, 70, 229, 0.1);
-}
-
-/* Tema Geçiş Efekti */
-.theme-transition {
-  transition: all 0.3s ease;
-}
-
-/* Tema Sınıfları */
-.theme-bg {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-.theme-card {
-  background-color: var(--card-bg);
-  border-color: var(--border-color);
-  box-shadow: 0 4px 6px var(--shadow-color, rgba(0, 0, 0, 0.05));
-}
-
-.theme-header {
-  background-color: var(--header-bg);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.theme-sidebar {
-  background-color: var(--sidebar-bg);
-}
-
-/* Renkli Tema için Özel Stiller */
-[data-theme="colored"] .theme-header {
-  background: linear-gradient(
-    to right,
-    var(--gradient-start),
-    var(--gradient-end)
-  );
-  color: white;
-}
-
-[data-theme="colored"] .theme-card {
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 15px var(--shadow-color);
-}
-
-[data-theme="colored"] .nav-link {
-  color: var(--text-color);
-  transition: all 0.3s ease;
-}
-
-[data-theme="colored"] .nav-link:hover {
-  background-color: var(--hover-color);
-  color: var(--accent-color);
-}
-
-[data-theme="colored"] .btn-primary {
-  background: linear-gradient(
-    to right,
-    var(--gradient-start),
-    var(--gradient-end)
-  );
-  border: none;
-  color: white;
-  transition: all 0.3s ease;
-}
-
-[data-theme="colored"] .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--shadow-color);
-}
-
-/* Diğer Stiller */
+/* Dark mode için genel bileşen stilleri */
 @layer components {
+  /* Butonlar için */
   .btn-primary {
     @apply bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 
       focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+
+  .dark .btn-primary {
+    @apply bg-blue-700 hover:bg-blue-600;
   }
 
   .btn-secondary {
@@ -113,13 +32,36 @@
       focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
   }
 
+  .dark .btn-secondary {
+    @apply bg-gray-700 text-slate-100 hover:bg-gray-600;
+  }
+
+  /* Input alanları için */
   .input-primary {
     @apply w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
       focus:ring-blue-500 focus:border-transparent;
   }
 
+  .dark .input-primary {
+    @apply bg-gray-800 border-gray-700 text-slate-100;
+  }
+
+  /* Kartlar için */
   .card-hover {
-    @apply transition-all duration-200 hover:shadow-lg;
+    @apply hover:shadow-lg;
+  }
+
+  .dark .card-hover {
+    @apply hover:shadow-slate-800;
+  }
+
+  /* Kartlar için (eski theme-card sınıfının yerine) */
+  .card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-md;
+  }
+
+  .dark .card {
+    @apply bg-gray-800 border-gray-700 text-slate-100;
   }
 }
 

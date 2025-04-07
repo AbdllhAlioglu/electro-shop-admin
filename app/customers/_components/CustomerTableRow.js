@@ -53,8 +53,8 @@ export default function CustomerTableRow({ customer }) {
 
   return (
     <>
-      <tr className="hover:bg-gray-50 transition-colors duration-200 border-b">
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
+      <tr className="hover:bg-gray-50 transition-colors duration-200 border-b dark:bg-gray-700 dark:text-slate-100 dark:hover:bg-gray-600 dark:border-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium dark:text-slate-100">
           <button
             onClick={() => setIsDetailsOpen(!isDetailsOpen)}
             className="flex items-center gap-1 focus:outline-none"
@@ -67,19 +67,19 @@ export default function CustomerTableRow({ customer }) {
             )}
           </button>
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {customer.full_name}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {customer.email}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {customer.phone}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {formattedDate}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           {customer.total_orders || 0}
         </td>
         <td className="px-4 py-2 whitespace-nowrap text-sm">
@@ -106,10 +106,12 @@ export default function CustomerTableRow({ customer }) {
       {/* Customer Details Row */}
       {isDetailsOpen && (
         <tr>
-          <td colSpan={7} className="px-4 py-3 bg-gray-50">
-            <div className="p-3 border rounded">
-              <h3 className="font-semibold mb-2">Müşteri Detayları</h3>
-              <p className="mb-1 text-sm">
+          <td colSpan={7} className="px-4 py-3 bg-gray-50 dark:bg-gray-700">
+            <div className="p-3 border rounded dark:bg-gray-700 dark:text-slate-100">
+              <h3 className="font-semibold mb-2 dark:text-slate-100">
+                Müşteri Detayları
+              </h3>
+              <p className="mb-1 text-sm dark:text-slate-100">
                 <span className="font-medium">ID:</span> {customer.id}
               </p>
               <p className="mb-1 text-sm">
@@ -119,17 +121,17 @@ export default function CustomerTableRow({ customer }) {
               <p className="mb-1 text-sm">
                 <span className="font-medium">E-posta:</span> {customer.email}
               </p>
-              <p className="mb-1 text-sm">
+              <p className="mb-1 text-sm dark:text-slate-100">
                 <span className="font-medium">Telefon:</span> {customer.phone}
               </p>
-              <p className="mb-1 text-sm">
+              <p className="mb-1 text-sm dark:text-slate-100">
                 <span className="font-medium">Adres:</span> {customer.address}
               </p>
-              <p className="mb-1 text-sm">
+              <p className="mb-1 text-sm dark:text-slate-100">
                 <span className="font-medium">Kayıt Tarihi:</span>{" "}
                 {formattedDate}
               </p>
-              <p className="mb-1 text-sm">
+              <p className="mb-1 text-sm dark:text-slate-100">
                 <span className="font-medium">Toplam Sipariş:</span>{" "}
                 {customer.total_orders || 0}
               </p>

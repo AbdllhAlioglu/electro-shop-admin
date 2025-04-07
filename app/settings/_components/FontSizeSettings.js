@@ -6,7 +6,7 @@ import { FONT_SIZES } from "./constants";
 export default function FontSizeSettings() {
   const [selectedFontSize, setSelectedFontSize] = useState("normal");
 
-  // Load saved font size from localStorage on component mount
+  // Sayfa yüklendiğinde localStorage'dan font boyutu bilgisini al ve uygula
   useEffect(() => {
     const savedFontSize = localStorage.getItem("selectedFontSize");
     if (savedFontSize) {
@@ -32,7 +32,7 @@ export default function FontSizeSettings() {
   };
 
   return (
-    <div className="theme-card rounded-lg shadow-md p-4 sm:p-6 max-w-2xl">
+    <div className="card p-4 sm:p-6 max-w-2xl">
       <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
         Yazı Boyutu Ayarları
       </h2>
@@ -41,17 +41,17 @@ export default function FontSizeSettings() {
           <button
             key={fontSize.id}
             onClick={() => handleFontSizeChange(fontSize.id)}
-            className={`p-3 sm:p-4 rounded-lg border-2 transition-all ${
+            className={`p-3 sm:p-4 rounded-lg border-2 ${
               selectedFontSize === fontSize.id
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200 hover:border-blue-300"
+                ? "border-blue-500 bg-blue-50 dark:bg-blue-900 dark:border-blue-400"
+                : "border-gray-200 hover:border-blue-300 dark:border-gray-700 dark:hover:border-blue-400"
             }`}
           >
             <div className="flex flex-col gap-1.5 sm:gap-2">
               <p className="font-medium text-sm sm:text-base line-clamp-1">
                 {fontSize.name}
               </p>
-              <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
+              <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                 {fontSize.description}
               </p>
               <div
@@ -65,7 +65,7 @@ export default function FontSizeSettings() {
         ))}
       </div>
       <div className="mt-4 sm:mt-6">
-        <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
+        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
           * Seçilen yazı boyutu tüm uygulamadaki metinleri etkileyecektir.
         </p>
       </div>

@@ -31,14 +31,14 @@ export default function AddCategoryForm({ onCategoryAdded, categories }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
+        <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100">
           Kategori Adı
         </label>
         <input
           {...register("name", { required: "Kategori adı gerekli" })}
           type="text"
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            placeholder-primary-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder-primary-400 focus:outline-none focus:ring-2  dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           disabled={isLoading}
         />
         {errors.name && (
@@ -49,13 +49,13 @@ export default function AddCategoryForm({ onCategoryAdded, categories }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-primary-200 mb-1">
+        <label className="block text-sm font-medium text-primary-200 mb-1 dark:text-slate-100 ">
           Üst Kategori
         </label>
         <select
           {...register("parent_id")}
           className="w-full bg-primary-800 border border-primary-700 rounded-md py-2 px-3 text-primary-100 
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           disabled={isLoading}
         >
           <option value="">Üst Kategori Yok</option>

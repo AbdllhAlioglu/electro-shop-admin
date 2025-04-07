@@ -75,7 +75,7 @@ export default function CustomerForm({
         <div>
           <label
             htmlFor="full_name"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             Müşteri Adı*
           </label>
@@ -87,7 +87,7 @@ export default function CustomerForm({
             onChange={handleChange}
             className={`w-full p-2 border ${
               errors.full_name ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600 focus:outline-none `}
             required
           />
           {errors.full_name && (
@@ -98,7 +98,7 @@ export default function CustomerForm({
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             E-posta*
           </label>
@@ -110,7 +110,7 @@ export default function CustomerForm({
             onChange={handleChange}
             className={`w-full p-2 border ${
               errors.email ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600 focus:outline-none`}
             required
           />
           {errors.email && (
@@ -121,7 +121,7 @@ export default function CustomerForm({
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             Telefon*
           </label>
@@ -133,7 +133,7 @@ export default function CustomerForm({
             onChange={handleChange}
             className={`w-full p-2 border ${
               errors.phone ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600 focus:outline-none`}
             required
           />
           {errors.phone && (
@@ -144,7 +144,7 @@ export default function CustomerForm({
         <div>
           <label
             htmlFor="address"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             Adres*
           </label>
@@ -156,7 +156,7 @@ export default function CustomerForm({
             rows={3}
             className={`w-full p-2 border ${
               errors.address ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600 focus:outline-none`}
             required
           ></textarea>
           {errors.address && (
@@ -168,14 +168,14 @@ export default function CustomerForm({
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-slate-100 dark:bg-gray-700 dark:border-gray-600"
             disabled={isSubmitting}
           >
             İptal
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none dark:bg-blue-700 dark:text-slate-100 dark:border-gray-600"
             disabled={isSubmitting}
           >
             {isSubmitting

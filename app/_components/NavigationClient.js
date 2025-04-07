@@ -72,15 +72,17 @@ export default function NavigationClient() {
       <li className="w-full md:w-auto">
         <Link
           href="/notifications"
-          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-all duration-200 ease-in-out w-full"
+          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 w-full"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-100 transition-colors">
-            <FiBell className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-primary-100 dark:bg-gray-800">
+            <FiBell className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-gray-700 dark:text-slate-100" />
           </div>
-          <span className="text-sm md:text-base font-medium">Bildirimler</span>
+          <span className="text-sm md:text-base font-medium text-gray-700 dark:text-slate-100">
+            Bildirimler
+          </span>
           {notificationCount > 0 && (
-            <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full">
+            <span className="bg-blue-100 text-blue-600 text-xs font-medium px-2 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-200">
               {notificationCount}
             </span>
           )}
@@ -89,37 +91,43 @@ export default function NavigationClient() {
       <li className="w-full md:w-auto">
         <Link
           href="/messages"
-          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-all duration-200 ease-in-out w-full"
+          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 w-full"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-100 transition-colors">
-            <FiMessageSquare className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-primary-100 dark:bg-gray-800">
+            <FiMessageSquare className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-gray-700 dark:text-slate-100" />
           </div>
-          <span className="text-sm md:text-base font-medium">Mesajlar</span>
+          <span className="text-sm md:text-base font-medium text-gray-700 dark:text-slate-100">
+            Mesajlar
+          </span>
         </Link>
       </li>
       <li className="w-full md:w-auto">
         <Link
           href="/help"
-          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-all duration-200 ease-in-out w-full"
+          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 w-full"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-100 transition-colors">
-            <FiHelpCircle className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-primary-100 dark:bg-gray-800">
+            <FiHelpCircle className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-gray-700 dark:text-slate-100" />
           </div>
-          <span className="text-sm md:text-base font-medium">Yardım</span>
+          <span className="text-sm md:text-base font-medium text-gray-700 dark:text-slate-100">
+            Yardım
+          </span>
         </Link>
       </li>
       <li className="w-full md:w-auto">
         <Link
           href="/profile"
-          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-all duration-200 ease-in-out w-full"
+          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 w-full"
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-100 transition-colors">
-            <FiUser className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-primary-100 dark:bg-gray-800">
+            <FiUser className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-gray-700 dark:text-slate-100" />
           </div>
-          <span className="text-sm md:text-base font-medium">Profil</span>
+          <span className="text-sm md:text-base font-medium text-gray-700 dark:text-slate-100">
+            Profil
+          </span>
         </Link>
       </li>
       <li className="w-full md:w-auto">
@@ -128,12 +136,12 @@ export default function NavigationClient() {
             setIsMenuOpen(false);
             handleLogout();
           }}
-          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 transition-all duration-200 ease-in-out w-full"
+          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 w-full"
         >
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 group-hover:bg-primary-100 transition-colors">
-            <FiLogOut className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-red-600" />
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-primary-100 dark:bg-gray-800">
+            <FiLogOut className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-red-600 dark:text-red-500" />
           </div>
-          <span className="text-sm md:text-base font-medium text-red-600">
+          <span className="text-sm md:text-base font-medium text-red-600 dark:text-red-500">
             Çıkış Yap
           </span>
         </button>
@@ -145,14 +153,14 @@ export default function NavigationClient() {
     <nav className="relative flex justify-end">
       {/* Hamburger menu button */}
       <button
-        className="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-50 transition-colors"
+        className="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         onClick={toggleMenu}
         aria-label={isMenuOpen ? "Menüyü Kapat" : "Menüyü Aç"}
       >
         {isMenuOpen ? (
-          <FiX className="w-6 h-6 text-gray-700" />
+          <FiX className="w-6 h-6 text-gray-700 dark:text-slate-100" />
         ) : (
-          <FiMenu className="w-6 h-6 text-gray-700" />
+          <FiMenu className="w-6 h-6 text-gray-700 dark:text-slate-100" />
         )}
       </button>
 
@@ -160,39 +168,39 @@ export default function NavigationClient() {
       <div
         className={`${
           isMenuOpen
-            ? "fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity md:hidden"
+            ? "fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
             : "hidden"
         }`}
         onClick={handleContentClick}
       >
         {/* Mobile menu panel - bottom drawer */}
         <div
-          className={`fixed inset-x-0 bottom-0 bg-white transform transition-transform duration-300 ease-in-out rounded-t-2xl ${
+          className={`fixed inset-x-0 bottom-0 bg-white dark:bg-gray-800 transform rounded-t-2xl ${
             isMenuOpen ? "translate-y-0" : "translate-y-full"
           } md:relative md:translate-y-0`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-4">
             {/* Drawer handle */}
-            <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4" />
+            <div className="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-4" />
 
             {/* Tab buttons */}
             <div className="flex gap-2 mb-4">
               <button
-                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium ${
                   activeTab === "nav"
-                    ? "bg-primary-50 text-primary-700"
-                    : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                    ? "bg-primary-50 text-primary-700 dark:bg-blue-900 dark:text-blue-100"
+                    : "bg-gray-50 text-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                 }`}
                 onClick={() => setActiveTab("nav")}
               >
                 Navigasyon
               </button>
               <button
-                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium ${
                   activeTab === "menu"
-                    ? "bg-primary-50 text-primary-700"
-                    : "bg-gray-50 text-gray-600 hover:bg-gray-100"
+                    ? "bg-primary-50 text-primary-700 dark:bg-blue-900 dark:text-blue-100"
+                    : "bg-gray-50 text-gray-600 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                 }`}
                 onClick={() => setActiveTab("menu")}
               >

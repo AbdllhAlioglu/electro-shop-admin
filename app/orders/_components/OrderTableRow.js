@@ -62,8 +62,8 @@ export default function OrderTableRow({ order }) {
 
   return (
     <>
-      <tr className="hover:bg-gray-50 transition-colors duration-200 border-b">
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
+      <tr className="hover:bg-gray-50 transition-colors duration-200  dark:bg-gray-700 dark:hover:bg-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium dark:text-slate-100">
           <button
             onClick={() => setIsDetailsOpen(!isDetailsOpen)}
             className="flex items-center gap-1 focus:outline-none"
@@ -76,19 +76,19 @@ export default function OrderTableRow({ order }) {
             )}
           </button>
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {order.customer}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {order.phone}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {formattedDate}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           {formatCurrency(order.discounted_total)}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100">
           <span
             className={`px-2 py-1 rounded-full text-xs ${
               order.priority === true || order.priority === "true"
@@ -101,7 +101,7 @@ export default function OrderTableRow({ order }) {
               : "Normal"}
           </span>
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           <div className="flex gap-2">
             <IconButton
               icon={FiEdit2}
@@ -125,10 +125,12 @@ export default function OrderTableRow({ order }) {
       {/* Order Details Row */}
       {isDetailsOpen && (
         <tr>
-          <td colSpan={7} className="px-4 py-3 bg-gray-50">
-            <div className="p-3 border rounded">
-              <h3 className="font-semibold mb-2">Sipariş Detayları</h3>
-              <p className="mb-1 text-sm">
+          <td colSpan={7} className="px-4 py-3 bg-gray-50 dark:bg-gray-700">
+            <div className="p-3 border rounded dark:bg-gray-700 dark:text-slate-100">
+              <h3 className="font-semibold mb-2 dark:text-slate-100 ">
+                Sipariş Detayları
+              </h3>
+              <p className="mb-1 text-sm dark:text-slate-100">
                 <span className="font-medium">Sipariş ID:</span> {order.id}
               </p>
               <p className="mb-1 text-sm">
@@ -149,10 +151,12 @@ export default function OrderTableRow({ order }) {
 
               {/* Order Items */}
               {orderItems.length > 0 && (
-                <div className="mt-3">
-                  <h4 className="font-medium mb-2 text-sm">Sipariş Öğeleri:</h4>
-                  <table className="w-full text-xs">
-                    <thead className="bg-gray-100">
+                <div className="mt-3  ">
+                  <h4 className="font-medium mb-2 text-sm dark:text-slate-100">
+                    Sipariş Öğeleri:
+                  </h4>
+                  <table className="w-full text-xs dark:text-slate-100 ">
+                    <thead className="bg-gray-100 dark:bg-gray-700">
                       <tr>
                         <th className="p-1 text-left">Ürün</th>
                         <th className="p-1 text-center">Adet</th>

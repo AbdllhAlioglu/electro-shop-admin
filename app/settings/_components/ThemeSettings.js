@@ -2,24 +2,32 @@
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { THEMES } from "./constants";
+import { useTheme } from "@/app/providers";
 
 export default function ThemeSettings() {
-  const [selectedTheme, setSelectedTheme] = useState("light");
+  const { theme, setTheme } = useTheme();
+  const [selectedTheme, setSelectedTheme] = useState(theme);
 
-  // Load saved theme from localStorage on component mount
+  // Global tema değiştiğinde local state'i güncelle
   useEffect(() => {
-    const savedTheme = localStorage.getItem("selectedTheme");
-    if (savedTheme) {
-      setSelectedTheme(savedTheme);
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
+    setSelectedTheme(theme);
+  }, [theme]);
 
   const handleThemeChange = (themeId) => {
+    if (themeId === selectedTheme) return;
+
     try {
       setSelectedTheme(themeId);
+      setTheme(themeId);
       localStorage.setItem("selectedTheme", themeId);
-      document.documentElement.setAttribute("data-theme", themeId);
+
+      // Dark mode için HTML elementine dark class'ı ekle
+      if (themeId === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
       toast.success("Tema başarıyla güncellendi!");
     } catch (error) {
       toast.error("Tema güncellenirken bir hata oluştu!");
@@ -28,7 +36,7 @@ export default function ThemeSettings() {
   };
 
   return (
-    <div className="theme-card rounded-lg shadow-md p-4 sm:p-6 max-w-2xl">
+    <div className="card p-4 sm:p-6 max-w-2xl">
       <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">
         Tema Ayarları
       </h2>
@@ -39,44 +47,25 @@ export default function ThemeSettings() {
             <button
               key={theme.id}
               onClick={() => handleThemeChange(theme.id)}
-              className={`p-4 sm:p-6 rounded-lg border-2 transition-all card-hover ${
+              className={`p-4 sm:p-6 rounded-lg border-2 card-hover ${
                 selectedTheme === theme.id
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-gray-200 hover:border-blue-300"
+                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900 dark:border-blue-400"
+                  : "border-gray-200 hover:border-blue-300 dark:border-gray-700 dark:hover:border-blue-400"
               }`}
             >
               <div className="flex flex-col gap-3 sm:gap-4">
                 <div className="flex items-start sm:items-center gap-2 sm:gap-3">
-                  <div
-                    className={`p-1.5 sm:p-2 rounded-lg flex-shrink-0 ${
-                      theme.id === "colored"
-                        ? "bg-gradient-to-r from-indigo-500 to-purple-500"
-                        : "bg-gray-100"
-                    }`}
-                  >
-                    <Icon
-                      className={`w-5 h-5 sm:w-6 sm:h-6 ${
-                        theme.id === "colored" ? "text-white" : "text-gray-600"
-                      }`}
-                    />
+                  <div className="p-1.5 sm:p-2 rounded-lg flex-shrink-0 bg-gray-100 dark:bg-gray-700">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 dark:text-slate-200" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm sm:text-base line-clamp-1">
                       {theme.name}
                     </p>
-                    <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
                       {theme.description}
                     </p>
                   </div>
-                </div>
-                <div className="flex gap-1.5 sm:gap-2 flex-wrap">
-                  {Object.values(theme.colors).map((color, index) => (
-                    <div
-                      key={index}
-                      className="w-4 h-4 sm:w-6 sm:h-6 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
                 </div>
               </div>
             </button>
@@ -84,8 +73,9 @@ export default function ThemeSettings() {
         })}
       </div>
       <div className="mt-4 sm:mt-6">
-        <p className="text-xs sm:text-sm text-gray-500 line-clamp-2">
-          * Seçilen tema tüm uygulamanın görünümünü değiştirecektir.
+        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+          * Tema tercihi tarayıcınızda saklanır ve bir sonraki girişinizde
+          hatırlanır.
         </p>
       </div>
     </div>

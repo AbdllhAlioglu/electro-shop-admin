@@ -90,61 +90,80 @@ export default function MessageViewModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+      <div className="bg-white p-6 rounded-lg w-full max-w-2xl max-h-[80vh] overflow-y-auto dark:bg-gray-700">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Mesaj Detayı</h2>
+          <h2 className="text-xl font-semibold dark:text-slate-100">
+            Mesaj Detayı
+          </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-gray-500 hover:text-gray-700 dark:text-slate-100"
           >
-            <FiX className="w-5 h-5" />
+            <FiX className="w-5 h-5 dark:text-slate-100" />
           </button>
         </div>
 
         <div className="space-y-4">
           <div className="flex justify-between border-b pb-3">
             <div className="space-y-1">
-              <p className="text-sm text-gray-500">Gönderen</p>
-              <p className="font-medium">{message.sender}</p>
+              <p className="text-sm text-gray-500 dark:text-slate-100">
+                Gönderen
+              </p>
+              <p className="font-medium dark:text-slate-100 ">
+                {message.sender}
+              </p>
             </div>
             <div className="space-y-1 text-right">
-              <p className="text-sm text-gray-500">Tarih</p>
+              <p className="text-sm text-gray-500 dark:text-slate-100">Tarih</p>
               <p>{formattedDate}</p>
             </div>
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-gray-500">Konu</p>
-            <p className="font-medium text-lg">{message.subject}</p>
+            <p className="text-sm text-gray-500 dark:text-slate-100">Konu</p>
+            <p className="font-medium text-lg dark:text-slate-100">
+              {message.subject}
+            </p>
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-gray-500">Mesaj</p>
-            <div className="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap">
+            <p className="text-sm text-gray-500 dark:text-slate-100">Mesaj</p>
+            <div className="bg-gray-50 p-4 rounded-lg whitespace-pre-wrap dark:bg-gray-800">
               {message.content}
             </div>
           </div>
 
           {message.email && (
-            <div className="space-y-1">
-              <p className="text-sm text-gray-500">E-posta</p>
-              <p className="text-blue-600">{message.email}</p>
+            <div className="space-y-1 dark:bg-gray-800 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-slate-100">
+                E-posta
+              </p>
+              <p className="text-blue-600 dark:text-slate-100">
+                {message.email}
+              </p>
             </div>
           )}
 
           {message.phone && (
-            <div className="space-y-1">
-              <p className="text-sm text-gray-500">Telefon</p>
-              <p>{message.phone}</p>
+            <div className="space-y-1 dark:bg-gray-800 rounded-lg p-4">
+              <p className="text-sm text-gray-500 dark:text-slate-100">
+                Telefon
+              </p>
+              <p className="dark:text-slate-100">{message.phone}</p>
             </div>
           )}
 
           {/* Previous Replies */}
           {replies.length > 0 && (
             <div className="space-y-3 mt-6">
-              <h3 className="font-medium text-gray-700">Önceki Yanıtlar</h3>
+              <h3 className="font-medium text-gray-700 dark:text-slate-100">
+                Önceki Yanıtlar
+              </h3>
               {replies.map((reply) => (
-                <div key={reply.id} className="bg-blue-50 p-4 rounded-lg">
+                <div
+                  key={reply.id}
+                  className="bg-blue-50 p-4 rounded-lg dark:bg-gray-800"
+                >
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-medium">
                       {reply.created_by}
@@ -167,12 +186,14 @@ export default function MessageViewModal({
 
           {/* Reply Form */}
           {isReplying ? (
-            <div className="mt-6 space-y-3">
-              <h3 className="font-medium text-gray-700">Yanıt Yaz</h3>
+            <div className="mt-6 space-y-3 dark:bg-gray-800 rounded-lg p-4">
+              <h3 className="font-medium text-gray-700 dark:text-slate-100">
+                Yanıt Yaz
+              </h3>
               <textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
-                className="w-full border border-gray-300 rounded-md p-3 min-h-[120px]"
+                className="w-full border border-gray-300 rounded-md p-3 min-h-[120px] dark:bg-gray-800 dark:text-slate-100 dark:focus:border-gray-700"
                 placeholder="Mesajınızı buraya yazın..."
               />
               <div className="flex justify-end gap-2">

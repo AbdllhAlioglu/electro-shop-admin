@@ -65,21 +65,21 @@ export default function ProductTableRow({
 
   return (
     <>
-      <tr className="hover:bg-gray-50 transition-colors duration-200">
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium">
+      <tr className="hover:bg-gray-50 transition-colors duration-200 dark:bg-gray-700 dark:hover:bg-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 font-medium dark:text-slate-100  ">
           {product.name}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           {displayPrice}
         </td>
         <td className="px-4 py-2 whitespace-nowrap text-sm">
           <StockStatus stock={product.stock} />
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           {categories?.find((category) => category.id === product.category_id)
             ?.name || "-"}
         </td>
-        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600">
+        <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-600 dark:text-slate-100  ">
           {brands?.find((brand) => brand.id === product.brand_id)?.name || "-"}
         </td>
         <td className="px-4 py-2 whitespace-nowrap text-sm">
@@ -105,8 +105,10 @@ export default function ProductTableRow({
 
       {isEditModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md">
-            <h2 className="text-xl font-semibold mb-4">Ürün Düzenle</h2>
+          <div className="bg-white p-6 rounded-lg w-full max-w-md dark:bg-gray-700">
+            <h2 className="text-xl font-semibold mb-4 dark:text-slate-100">
+              Ürün Düzenle
+            </h2>
             <EditProductForm
               product={product}
               categories={categories}

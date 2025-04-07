@@ -12,7 +12,7 @@ export default function OrderTableBody({ orders }) {
   }
 
   return (
-    <tbody className="divide-y divide-gray-200">
+    <tbody className=" divide-gray-200 dark:divide-gray-700">
       {orders.map((order) => (
         <OrderTableRow key={order.id} order={order} />
       ))}

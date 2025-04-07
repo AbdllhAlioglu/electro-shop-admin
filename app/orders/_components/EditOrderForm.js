@@ -90,7 +90,7 @@ export default function EditOrderForm({
         <div>
           <label
             htmlFor="customer"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             Müşteri Adı*
           </label>
@@ -102,7 +102,7 @@ export default function EditOrderForm({
             onChange={handleChange}
             className={`w-full p-2 border ${
               errors.customer ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600`}
             required
           />
           {errors.customer && (
@@ -113,7 +113,7 @@ export default function EditOrderForm({
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             Telefon*
           </label>
@@ -125,7 +125,7 @@ export default function EditOrderForm({
             onChange={handleChange}
             className={`w-full p-2 border ${
               errors.phone ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600`}
             required
           />
           {errors.phone && (
@@ -136,7 +136,7 @@ export default function EditOrderForm({
         <div>
           <label
             htmlFor="address"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             Adres*
           </label>
@@ -148,7 +148,7 @@ export default function EditOrderForm({
             rows={3}
             className={`w-full p-2 border ${
               errors.address ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600`}
             required
           ></textarea>
           {errors.address && (
@@ -159,7 +159,7 @@ export default function EditOrderForm({
         <div>
           <label
             htmlFor="discount_percentage"
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 mb-1 dark:text-slate-100"
           >
             İndirim Yüzdesi (%)*
           </label>
@@ -173,7 +173,7 @@ export default function EditOrderForm({
             max={100}
             className={`w-full p-2 border ${
               errors.discount_percentage ? "border-red-500" : "border-gray-300"
-            } rounded-md`}
+            } rounded-md dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600`}
             required
           />
           {errors.discount_percentage && (
@@ -190,11 +190,11 @@ export default function EditOrderForm({
             name="priority"
             checked={formData.priority}
             onChange={handleChange}
-            className="h-4 w-4 text-blue-600 border-gray-300 rounded"
+            className="h-4 w-4 text-blue-600 border-gray-300 rounded dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
           />
           <label
             htmlFor="priority"
-            className="ml-2 block text-sm text-gray-700"
+            className="ml-2 block text-sm text-gray-700 dark:text-slate-100"
           >
             Hızlı Teslimat
           </label>
@@ -204,7 +204,7 @@ export default function EditOrderForm({
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-slate-100 dark:bg-gray-700 dark:border-gray-600"
             disabled={isSubmitting}
           >
             İptal

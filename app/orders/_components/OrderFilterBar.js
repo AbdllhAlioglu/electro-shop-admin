@@ -18,7 +18,7 @@ export default function OrderFilterBar({
           placeholder="Sipariş ara..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none  dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
         />
       </div>
 
@@ -27,7 +27,7 @@ export default function OrderFilterBar({
         <select
           value={sortBy}
           onChange={(e) => onSortChange(e.target.value)}
-          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none  dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
         >
           <option value="created_at">Tarih</option>
           <option value="customer">Müşteri</option>
@@ -42,7 +42,7 @@ export default function OrderFilterBar({
           onClick={() =>
             onSortDirectionChange(sortDirection === "asc" ? "desc" : "asc")
           }
-          className="w-full flex items-center justify-center gap-2 px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full flex items-center justify-center gap-2 px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50 transition-colors focus:outline-none  dark:bg-gray-700 dark:text-slate-100 dark:border-gray-600"
         >
           <span>Sıralama:</span>
           {sortDirection === "asc" ? (

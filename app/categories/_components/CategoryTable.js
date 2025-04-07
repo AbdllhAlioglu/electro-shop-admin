@@ -42,13 +42,13 @@ export default function CategoryTable({ initialCategories }) {
 
   return (
     <div className="overflow-x-auto rounded-lg shadow-lg">
-      <table className="min-w-full bg-white">
+      <table className="min-w-full bg-white ">
         <CategoryTableHeader
           sortBy={sortBy}
           sortDirection={sortDirection}
           onSortChange={handleSortChange}
         />
-        <tbody className="divide-y divide-gray-200">
+        <tbody className=" divide-gray-200">
           {sortedCategories?.map((category) => (
             <CategoryTableRow
               key={category.id}
