@@ -28,18 +28,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={josefin.variable}>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            try {
-              const savedTheme = localStorage.getItem("selectedTheme");
-              if (savedTheme === "dark") document.documentElement.classList.add("dark");
-              else document.documentElement.classList.remove("dark");
-            } catch (e) {}
-          `,
-        }}
-      />
-      <body className="min-h-screen bg-gray-50">
+      <body className="min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-slate-100">
         <Providers>
           <AuthProvider>
             <RootLayoutClient header={await Header()}>

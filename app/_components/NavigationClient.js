@@ -10,11 +10,14 @@ import {
   FiUser,
   FiMenu,
   FiX,
+  FiSun,
+  FiMoon,
 } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/app/_lib/supabase";
 import { useNotificationsCount } from "@/app/_hooks/useNotifications";
+import { useTheme } from "@/app/providers";
 import LeftMenu from "./LeftMenu";
 
 export default function NavigationClient() {
@@ -22,6 +25,7 @@ export default function NavigationClient() {
   const { data: notificationCount = 0 } = useNotificationsCount();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("nav"); // 'nav' veya 'menu'
+  const { theme, setTheme } = useTheme();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -106,6 +110,7 @@ export default function NavigationClient() {
           )}
         </Link>
       </li>
+
       <li className="w-full md:w-auto">
         <Link
           href="/messages"
@@ -147,6 +152,31 @@ export default function NavigationClient() {
             Profil
           </span>
         </Link>
+      </li>
+      {/* Tema toggle butonu */}
+      <li className="w-full md:w-auto">
+        <button
+          onClick={() => {
+            const newTheme = theme === "dark" ? "light" : "dark";
+            setTheme(newTheme);
+            // Tema değişikliğinin etkisini hemen görmek için doğrudan DOM'u da değiştirelim
+            if (newTheme === "dark") {
+              document.documentElement.classList.add("dark");
+            } else {
+              document.documentElement.classList.remove("dark");
+            }
+          }}
+          className="group flex items-center gap-3 px-3 md:px-4 py-2.5 rounded-lg text-gray-700 hover:bg-primary-50 hover:text-primary-700 w-full"
+          aria-label={theme === "dark" ? "Açık Mod'a geç" : "Koyu Mod'a geç"}
+        >
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-primary-100 dark:bg-gray-800">
+            {theme === "dark" ? (
+              <FiSun className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-yellow-500" />
+            ) : (
+              <FiMoon className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0 text-blue-500" />
+            )}
+          </div>
+        </button>
       </li>
       <li className="w-full md:w-auto">
         <button

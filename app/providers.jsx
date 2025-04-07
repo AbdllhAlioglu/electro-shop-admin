@@ -38,7 +38,23 @@ function ThemeProvider({ children }) {
   }, []);
 
   // Context değerini memo ile optimize et
-  const contextValue = useMemo(() => ({ theme, setTheme }), [theme]);
+  const contextValue = useMemo(
+    () => ({
+      theme,
+      setTheme: (newTheme) => {
+        setTheme(newTheme);
+        localStorage.setItem("selectedTheme", newTheme);
+
+        // Dark mode için HTML elementine dark class'ı ekle
+        if (newTheme === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      },
+    }),
+    [theme]
+  );
 
   return (
     <ThemeContext.Provider value={contextValue}>
