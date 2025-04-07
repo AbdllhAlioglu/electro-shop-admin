@@ -9,7 +9,7 @@ export default function OrderTableHeader({
   };
 
   return (
-    <thead className="bg-gray-800 rounded-lg">
+    <thead className="bg-gray-900 rounded-lg">
       <tr>
         <th className="px-4 py-2 text-left text-xs font-semibold text-white tracking-wider">
           <button

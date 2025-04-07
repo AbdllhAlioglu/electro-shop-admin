@@ -15,8 +15,8 @@ export default function MessageTable({ initialMessages }) {
 
   return (
     <div className="overflow-x-auto rounded-lg shadow-lg">
-      <table className="min-w-full bg-white border-collapse">
-        <thead className="bg-gray-800">
+      <table className="min-w-full bg-white border-collapse ">
+        <thead className="bg-gray-900">
           <tr>
             <th className="px-6 py-4 text-left text-sm font-semibold text-white tracking-wider">
               Gönderen

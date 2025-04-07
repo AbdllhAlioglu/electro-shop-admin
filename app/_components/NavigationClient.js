@@ -50,10 +50,28 @@ export default function NavigationClient() {
             onClick={async () => {
               try {
                 toast.dismiss(t.id);
-                const { error } = await supabase.auth.signOut();
-                if (error) throw error;
+
+                // Session önbelleğini temizle
+                localStorage.removeItem("supabase.auth.token");
+
+                // SignOut işlemini dene, hata olursa da devam et
+                try {
+                  await supabase.auth.signOut();
+                } catch (signOutError) {
+                  console.warn(
+                    "SignOut sırasında hata oluştu, sayfaya yine de yönlendiriliyor:",
+                    signOutError
+                  );
+                }
+
+                // Başarı mesajı göster
                 toast.success("Başarıyla çıkış yapıldı");
-                router.push("/");
+
+                // Ana sayfaya yönlendir
+                setTimeout(() => {
+                  router.push("/");
+                  router.refresh();
+                }, 500);
               } catch (error) {
                 toast.error("Çıkış yapılırken bir hata oluştu");
                 console.error("Çıkış hatası:", error);
@@ -194,7 +212,7 @@ export default function NavigationClient() {
                 }`}
                 onClick={() => setActiveTab("nav")}
               >
-                Navigasyon
+                Hızlı Erişim
               </button>
               <button
                 className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium ${
@@ -204,7 +222,7 @@ export default function NavigationClient() {
                 }`}
                 onClick={() => setActiveTab("menu")}
               >
-                Menü
+                Sayfalar
               </button>
             </div>
 

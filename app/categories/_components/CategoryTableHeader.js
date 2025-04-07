@@ -9,7 +9,7 @@ export default function CategoryTableHeader({
   };
 
   return (
-    <thead className="bg-gray-800 rounded-lg">
+    <thead className="bg-gray-900 rounded-lg">
       <tr>
         <th className="px-6 py-4 text-left text-xs font-semibold text-white tracking-wider">
           <button

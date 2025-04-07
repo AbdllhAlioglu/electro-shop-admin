@@ -110,7 +110,7 @@ export default function ProductTableClient({
         categories={categories}
       />
 
-      <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
+      <table className="min-w-full bg-white rounded-lg overflow-hidden shadow-sm ">
         <ProductTableHeader
           sortBy={sortBy}
           sortDirection={sortDirection}
