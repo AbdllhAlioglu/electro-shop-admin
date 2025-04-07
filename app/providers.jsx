@@ -1,7 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext, useMemo } from "react";
 import { Toaster } from "react-hot-toast";
 
 // Tema için context oluştur
@@ -37,8 +37,11 @@ function ThemeProvider({ children }) {
     }
   }, []);
 
+  // Context değerini memo ile optimize et
+  const contextValue = useMemo(() => ({ theme, setTheme }), [theme]);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
@@ -50,10 +53,12 @@ export default function Providers({ children }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 10 * 1000, // 10 saniye
-            refetchOnWindowFocus: true, // Sekme aktif olduğunda yenile
+            staleTime: 1 * 60 * 1000, // 1 dakika
+            cacheTime: 10 * 60 * 1000, // 10 dakika
+            refetchOnWindowFocus: false, // Sekme değişiminde otomatik yenileme kapalı
             retry: 1, // Başarısız sorguları sadece 1 kez yeniden dene
-            refetchOnReconnect: true, // Bağlantı tekrar kurulduğunda yeniden veri çek
+            refetchOnReconnect: false, // Bağlantı tekrar kurulduğunda otomatik yenileme kapalı
+            refetchOnMount: true, // Bileşen monte edildiğinde veri çek
           },
         },
       })

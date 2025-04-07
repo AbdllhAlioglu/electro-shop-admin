@@ -2,8 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import ClientLayout from "../ClientLayout";
+import { memo } from "react";
 
-export default function RootLayoutClient({ children, header }) {
+function RootLayoutClient({ children, header }) {
   const pathname = usePathname();
   const isPublicPage = pathname === "/";
 
@@ -18,3 +19,5 @@ export default function RootLayoutClient({ children, header }) {
     </div>
   );
 }
+
+export default memo(RootLayoutClient);

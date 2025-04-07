@@ -9,7 +9,6 @@ const josefin = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-josefin",
-  preload: true,
   weight: ["400", "700"],
 });
 
@@ -32,20 +31,11 @@ export default async function RootLayout({ children }) {
       <script
         dangerouslySetInnerHTML={{
           __html: `
-            (function() {
-              try {
-                // localStorage'dan tema ayarını oku
-                const savedTheme = localStorage.getItem("selectedTheme");
-                // Eğer dark mod seçiliyse hemen uygula
-                if (savedTheme === "dark") {
-                  document.documentElement.classList.add("dark");
-                } else {
-                  document.documentElement.classList.remove("dark");
-                }
-              } catch (e) {
-                console.error("Tema yüklenirken hata:", e);
-              }
-            })();
+            try {
+              const savedTheme = localStorage.getItem("selectedTheme");
+              if (savedTheme === "dark") document.documentElement.classList.add("dark");
+              else document.documentElement.classList.remove("dark");
+            } catch (e) {}
           `,
         }}
       />

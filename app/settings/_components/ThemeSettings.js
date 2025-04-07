@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
 import { THEMES } from "./constants";
 import { useTheme } from "@/app/providers";
@@ -7,33 +7,44 @@ import { useTheme } from "@/app/providers";
 export default function ThemeSettings() {
   const { theme, setTheme } = useTheme();
   const [selectedTheme, setSelectedTheme] = useState(theme);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Global tema değiştiğinde local state'i güncelle
   useEffect(() => {
     setSelectedTheme(theme);
   }, [theme]);
 
-  const handleThemeChange = (themeId) => {
-    if (themeId === selectedTheme) return;
+  const handleThemeChange = useCallback(
+    (themeId) => {
+      if (themeId === selectedTheme || isLoading) return;
 
-    try {
-      setSelectedTheme(themeId);
-      setTheme(themeId);
-      localStorage.setItem("selectedTheme", themeId);
+      setIsLoading(true);
+      try {
+        setSelectedTheme(themeId);
+        setTheme(themeId);
 
-      // Dark mode için HTML elementine dark class'ı ekle
-      if (themeId === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
+        // Bir mikrosaniye sonra localStorage işlemini yap (debounce)
+        setTimeout(() => {
+          localStorage.setItem("selectedTheme", themeId);
+        }, 0);
+
+        // Dark mode için HTML elementine dark class'ı ekle
+        if (themeId === "dark") {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+
+        toast.success("Tema başarıyla güncellendi!");
+      } catch (error) {
+        toast.error("Tema güncellenirken bir hata oluştu!");
+        console.error("Tema güncellenirken hata:", error);
+      } finally {
+        setIsLoading(false);
       }
-
-      toast.success("Tema başarıyla güncellendi!");
-    } catch (error) {
-      toast.error("Tema güncellenirken bir hata oluştu!");
-      console.error("Tema güncellenirken hata:", error);
-    }
-  };
+    },
+    [selectedTheme, setTheme, isLoading]
+  );
 
   return (
     <div className="card p-4 sm:p-6 max-w-2xl">
@@ -43,15 +54,18 @@ export default function ThemeSettings() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {THEMES.map((theme) => {
           const Icon = theme.icon;
+          const isSelected = selectedTheme === theme.id;
+
           return (
             <button
               key={theme.id}
               onClick={() => handleThemeChange(theme.id)}
               className={`p-4 sm:p-6 rounded-lg border-2 card-hover ${
-                selectedTheme === theme.id
+                isSelected
                   ? "border-blue-500 bg-blue-50 dark:bg-blue-900 dark:border-blue-400"
                   : "border-gray-200 hover:border-blue-300 dark:border-gray-700 dark:hover:border-blue-400"
               }`}
+              disabled={isLoading}
             >
               <div className="flex flex-col gap-3 sm:gap-4">
                 <div className="flex items-start sm:items-center gap-2 sm:gap-3">
