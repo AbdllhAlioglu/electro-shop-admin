@@ -9,7 +9,7 @@ export default function CategoriesClient({ initialCategories }) {
   const { data: categories = initialCategories } = useCategories();
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 animate-fade-in-left">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Kategoriler</h1>
         <AddCategoryButton categories={categories} />

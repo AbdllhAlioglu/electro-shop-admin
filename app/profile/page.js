@@ -90,14 +90,22 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div
+        className={`flex items-center justify-center min-h-screen ${
+          loading ? "animate-spin" : ""
+        }`}
+      >
+        <div className="rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div
+      className={`container mx-auto px-4 py-8 max-w-4xl ${
+        !loading ? "animate-fade-in-left" : "opacity-0"
+      }`}
+    >
       <div className="bg-white rounded-xl shadow-lg p-8 dark:bg-gray-700">
         <div className="flex items-center gap-4 mb-8">
           <div className="bg-blue-100 p-3 rounded-full dark:bg-blue-600 dark:hover:bg-blue-700">

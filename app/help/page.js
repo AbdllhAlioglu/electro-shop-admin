@@ -1,14 +1,29 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Page() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Sayfa yüklendiğinde animasyonları başlat
+    setIsVisible(true);
+  }, []);
+
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8">Admin Yardım Merkezi</h1>
+      <h1
+        className={`text-3xl font-bold mb-8 ${
+          isVisible ? "animate-fade-in-left" : ""
+        }`}
+      >
+        Admin Yardım Merkezi
+      </h1>
 
       <div className="space-y-8">
         {/* Ürün Yönetimi */}
-        <section>
+        <section
+          className={`${isVisible ? "animate-fade-in-left" : "opacity-0"}`}
+        >
           <h2 className="text-2xl font-semibold mb-4">Ürün Yönetimi</h2>
           <div className="space-y-4">
             <div className="bg-white p-4 rounded-lg shadow dark:bg-gray-700">
@@ -36,7 +51,9 @@ export default function Page() {
         </section>
 
         {/* Kategori Yönetimi */}
-        <section>
+        <section
+          className={`${isVisible ? "animate-fade-in-left" : "opacity-0"}`}
+        >
           <h2 className="text-2xl font-semibold mb-4">Kategori Yönetimi</h2>
           <div className="space-y-4">
             <div className="bg-white p-4 rounded-lg shadow dark:bg-gray-700">
@@ -53,7 +70,9 @@ export default function Page() {
         </section>
 
         {/* Sipariş Yönetimi */}
-        <section>
+        <section
+          className={`${isVisible ? "animate-fade-in-left" : "opacity-0"}`}
+        >
           <h2 className="text-2xl font-semibold mb-4">Sipariş Yönetimi</h2>
           <div className="space-y-4">
             <div className="bg-white p-4 rounded-lg shadow dark:bg-gray-700">
@@ -70,7 +89,9 @@ export default function Page() {
         </section>
 
         {/* Müşteri Yönetimi */}
-        <section>
+        <section
+          className={`${isVisible ? "animate-fade-in-left" : "opacity-0"}`}
+        >
           <h2 className="text-2xl font-semibold mb-4">Müşteri Yönetimi</h2>
           <div className="space-y-4">
             <div className="bg-white p-4 rounded-lg shadow dark:bg-gray-700">
@@ -87,7 +108,9 @@ export default function Page() {
         </section>
 
         {/* Teknik Destek */}
-        <section>
+        <section
+          className={`${isVisible ? "animate-fade-in-left" : "opacity-0"}`}
+        >
           <h2 className="text-2xl font-semibold mb-4">Teknik Destek</h2>
           <div className="bg-white p-6 rounded-lg shadow dark:bg-gray-700">
             <div className="space-y-4">

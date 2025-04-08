@@ -1,10 +1,20 @@
 "use client";
 
 import { FiPlus, FiEdit2, FiTrash2 } from "react-icons/fi";
-
+import { useState, useEffect } from "react";
 export default function NotificationFilters({ filterType, onFilterChange }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
-    <div className="flex flex-wrap gap-2 mb-6">
+    <div
+      className={`flex flex-wrap gap-2 mb-6 ${
+        isVisible ? "animate-fade-in-left" : "opacity-0"
+      }`}
+    >
       <button
         onClick={() => onFilterChange("all")}
         className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${

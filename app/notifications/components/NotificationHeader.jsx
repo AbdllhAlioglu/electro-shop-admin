@@ -1,14 +1,24 @@
 "use client";
 
 import { FiCheckCircle, FiRefreshCw } from "react-icons/fi";
-
+import { useState, useEffect } from "react";
 export default function NotificationHeader({
   totalCount,
   onMarkAllAsRead,
   onRefresh,
 }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div
+      className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4 ${
+        isVisible ? "animate-fade-in-left" : "opacity-0"
+      }`}
+    >
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
           Bildirimler

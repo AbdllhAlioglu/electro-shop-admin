@@ -14,7 +14,7 @@ export default function SettingsPage() {
     <>
       <SettingsProvider />
 
-      <div className="container mx-auto p-6 space-y-6">
+      <div className="container mx-auto p-6 space-y-6 animate-fade-in-left">
         <h1 className="text-2xl font-bold mb-6">Ayarlar</h1>
 
         {/* Para Birimi Ayarları */}

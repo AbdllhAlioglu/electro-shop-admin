@@ -154,7 +154,7 @@ export default function StatisticsPage({
   }, [initialProducts, initialCategories]);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 animate-fade-in-left">
       <h1 className="text-2xl font-bold mb-6">İstatistikler</h1>
 
       {/* Tabs */}

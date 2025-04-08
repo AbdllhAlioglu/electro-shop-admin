@@ -11,7 +11,7 @@ export default function MessagesClient({ initialMessages }) {
   const unreadCount = messages.filter((message) => !message.isread).length;
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 animate-fade-in-left">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-700 dark:text-slate-100">

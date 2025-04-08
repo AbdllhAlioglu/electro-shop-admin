@@ -90,7 +90,7 @@ export default function NotificationContainer({ notifications = [] }) {
         onFilterChange={handleFilterChange}
       />
 
-      <div className="space-y-8">
+      <div className="space-y-8 animate-fade-in-left">
         {Object.entries(groupedNotifications).map(
           ([dateLabel, notifications]) => (
             <NotificationGroup
